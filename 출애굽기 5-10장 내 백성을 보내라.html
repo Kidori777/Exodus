@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>출애굽기 — 내 백성을 보내라 | 하나님의 영원한 경륜 시리즈</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Noto+Serif+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:    #05060F;
+    --abyss:    #0B0D1A;
+    --deep:     #101428;
+    --navy:     #16213E;
+    --gold:     #C8922A;
+    --flame:    #E8761A;
+    --ember:    #F0A040;
+    --ash:      #8A8CA0;
+    --dust:     #C4C0B8;
+    --parchment:#F5F0E8;
+    --white:    #FDFCFA;
+    --blood:    #8B1A1A;
+    --light:    #FFF4D6;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--abyss);
+    color: var(--dust);
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 400;
+    line-height: 1.9;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--black);
+  }
+
+  #heroCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 2rem;
+    max-width: 800px;
+  }
+
+  .series-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    color: var(--ash);
+    text-transform: uppercase;
+    margin-bottom: 1.8rem;
+    opacity: 0;
+    animation: fadeUp 1.2s 0.3s ease forwards;
+  }
+
+  .hero-title-ko {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(2.6rem, 7vw, 5.2rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.6rem;
+    opacity: 0;
+    animation: fadeUp 1.2s 0.55s ease forwards;
+  }
+
+  .hero-title-en {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 1.2s 0.75s ease forwards;
+  }
+
+  .hero-verse {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(0.9rem, 2vw, 1.05rem);
+    font-weight: 300;
+    color: var(--ash);
+    line-height: 1.8;
+    max-width: 560px;
+    margin: 0 auto 3rem;
+    opacity: 0;
+    animation: fadeUp 1.2s 0.95s ease forwards;
+  }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 1.2s 1.4s ease forwards;
+  }
+  .scroll-cue span {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--ash);
+  }
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollLine 2s 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollLine {
+    0%   { transform: scaleY(0); transform-origin: top; }
+    50%  { transform: scaleY(1); transform-origin: top; }
+    51%  { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* ─── MAIN LAYOUT ─── */
+  .main-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ─── OPENING ─── */
+  .opening-block {
+    padding: 8rem 0 5rem;
+    text-align: center;
+  }
+
+  .opening-quote {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.15rem, 3vw, 1.45rem);
+    font-weight: 500;
+    color: var(--parchment);
+    line-height: 1.8;
+    margin-bottom: 0.8rem;
+  }
+
+  .verse-ref {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+  }
+
+  .opening-body {
+    margin-top: 3.5rem;
+    font-size: 1.05rem;
+    color: var(--dust);
+    line-height: 2;
+    text-align: left;
+  }
+
+  /* ─── SECTION PATTERN ─── */
+  .section-block {
+    padding: 5rem 0;
+    border-top: 1px solid rgba(200,146,42,0.12);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .section-block.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+
+  .section-heading {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.4rem, 3.5vw, 2rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.4;
+    margin-bottom: 2rem;
+  }
+
+  .section-body {
+    font-size: 1.02rem;
+    line-height: 2;
+    color: var(--dust);
+  }
+
+  .section-body p { margin-bottom: 1.5rem; }
+  .section-body p:last-child { margin-bottom: 0; }
+
+  /* ─── INLINE QUOTE ─── */
+  .inline-quote {
+    border-left: 2px solid var(--gold);
+    padding: 1.2rem 1.8rem;
+    margin: 2.5rem 0;
+    background: rgba(200,146,42,0.05);
+  }
+
+  .inline-quote p {
+    font-size: 1.08rem;
+    font-weight: 500;
+    color: var(--parchment);
+    line-height: 1.8;
+    margin: 0 0 0.5rem !important;
+  }
+
+  .inline-quote .ref {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    opacity: 0.8;
+  }
+
+  /* ─── PHARAOH BLOCK ─── */
+  .pharaoh-challenge {
+    background: linear-gradient(135deg, rgba(139,26,26,0.18), rgba(5,6,15,0.9));
+    border: 1px solid rgba(139,26,26,0.3);
+    padding: 3rem;
+    margin: 3rem 0;
+    text-align: center;
+  }
+
+  .pharaoh-challenge .challenge-text {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-weight: 600;
+    color: #D88;
+    line-height: 1.7;
+    margin-bottom: 0.6rem;
+  }
+
+  .pharaoh-challenge .challenge-ref {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--blood);
+    opacity: 0.8;
+  }
+
+  /* ─── PLAGUE GRID ─── */
+  .plague-section {
+    padding: 5rem 0;
+    border-top: 1px solid rgba(200,146,42,0.12);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .plague-section.visible { opacity: 1; transform: translateY(0); }
+
+  .plague-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-top: 3rem;
+    background: rgba(200,146,42,0.1);
+    border: 1px solid rgba(200,146,42,0.1);
+  }
+
+  .plague-cell {
+    background: var(--abyss);
+    padding: 1.8rem 1.4rem;
+    text-align: center;
+    transition: background 0.3s ease;
+  }
+
+  .plague-cell:hover { background: rgba(200,146,42,0.07); }
+
+  .plague-number {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    opacity: 0.4;
+    margin-bottom: 0.5rem;
+  }
+
+  .plague-name {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--parchment);
+    margin-bottom: 0.4rem;
+  }
+
+  .plague-meaning {
+    font-size: 0.78rem;
+    color: var(--ash);
+    line-height: 1.5;
+  }
+
+  .plague-cell.darkness {
+    grid-column: span 3;
+    background: var(--black);
+    border-top: 1px solid rgba(200,146,42,0.08);
+  }
+
+  .plague-cell.darkness .plague-name {
+    font-size: 1.2rem;
+    color: var(--ember);
+  }
+
+  /* ─── LIGHT IN DARKNESS ─── */
+  .light-contrast {
+    margin: 4rem 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(200,146,42,0.12);
+  }
+
+  .contrast-panel {
+    padding: 3rem 2.5rem;
+    text-align: center;
+  }
+
+  .contrast-panel.dark-side {
+    background: var(--black);
+  }
+
+  .contrast-panel.light-side {
+    background: rgba(255,244,214,0.05);
+  }
+
+  .contrast-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    margin-bottom: 1.2rem;
+  }
+
+  .contrast-panel.dark-side .contrast-label { color: var(--ash); }
+  .contrast-panel.light-side .contrast-label { color: var(--ember); }
+
+  .contrast-text {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+
+  .contrast-panel.dark-side .contrast-text { color: var(--ash); }
+  .contrast-panel.light-side .contrast-text { color: var(--light); }
+
+  /* ─── FLOW CHART ─── */
+  .flow-section {
+    padding: 5rem 0;
+    border-top: 1px solid rgba(200,146,42,0.12);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .flow-section.visible { opacity: 1; transform: translateY(0); }
+
+  .flow-steps {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin-top: 3rem;
+  }
+
+  .flow-step {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.2rem 2rem;
+    width: 100%;
+    max-width: 480px;
+    border: 1px solid rgba(200,146,42,0.15);
+    background: rgba(200,146,42,0.04);
+    margin-bottom: 0;
+    transition: background 0.3s;
+  }
+
+  .flow-step:hover { background: rgba(200,146,42,0.1); }
+
+  .flow-arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.3rem 0;
+    color: var(--gold);
+    opacity: 0.5;
+    font-size: 1.2rem;
+  }
+
+  .flow-step-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+
+  .flow-step-text {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--parchment);
+    text-align: left;
+  }
+
+  .flow-step-sub {
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: var(--ash);
+    margin-top: 0.2rem;
+  }
+
+  .flow-final {
+    margin-top: 1rem;
+    background: linear-gradient(135deg, rgba(200,146,42,0.18), rgba(200,146,42,0.05));
+    border: 1px solid rgba(200,146,42,0.4);
+    padding: 2rem 3rem;
+    max-width: 480px;
+    width: 100%;
+  }
+
+  .flow-final-text {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--ember);
+    line-height: 1.6;
+  }
+
+  /* ─── CONCLUSION ─── */
+  .conclusion-block {
+    padding: 6rem 0;
+    border-top: 1px solid rgba(200,146,42,0.12);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .conclusion-block.visible { opacity: 1; transform: translateY(0); }
+
+  .conclusion-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    margin-bottom: 2rem;
+  }
+
+  .conclusion-main {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.6;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .conclusion-body {
+    font-size: 1.02rem;
+    color: var(--dust);
+    line-height: 2;
+    max-width: 600px;
+    margin: 0 auto 4rem;
+    text-align: left;
+  }
+
+  .final-verse {
+    background: linear-gradient(135deg, rgba(200,146,42,0.1), transparent);
+    border: 1px solid rgba(200,146,42,0.25);
+    padding: 3rem;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .final-verse p {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+    font-weight: 600;
+    color: var(--ember);
+    line-height: 1.8;
+    margin-bottom: 0.8rem;
+  }
+
+  .final-verse .ref {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid rgba(200,146,42,0.15);
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+
+  .footer-series {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    color: var(--ash);
+    margin-bottom: 0.6rem;
+  }
+
+  .footer-church {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--gold);
+    opacity: 0.8;
+    margin-bottom: 0.4rem;
+  }
+
+  .footer-range {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--ash);
+    opacity: 0.5;
+  }
+
+  /* ─── KEYFRAMES ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 640px) {
+    .plague-grid { grid-template-columns: repeat(3, 1fr); }
+    .plague-cell { padding: 1.2rem 0.8rem; }
+    .light-contrast { grid-template-columns: 1fr; }
+    .contrast-panel { padding: 2rem 1.5rem; }
+    .pharaoh-challenge { padding: 2rem 1.5rem; }
+    .main-wrap { padding: 0 1.2rem; }
+    .flow-step { padding: 1rem 1.2rem; }
+    .flow-final { padding: 1.8rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-content">
+    <p class="series-eyebrow">하나님의 영원한 경륜 시리즈 · Exodus</p>
+    <h1 class="hero-title-ko">내 백성을 보내라</h1>
+    <p class="hero-title-en">LET MY PEOPLE GO</p>
+    <p class="hero-verse">
+      "나는 여호와다. 내가 너희를 이끌어 내고<br>
+      구속하겠다. 너희를 내 백성으로 삼겠다."<br>
+      <span style="font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.2em;color:var(--gold);opacity:0.7;">출애굽기 6:6–7</span>
+    </p>
+  </div>
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══ MAIN ═══ -->
+<main>
+<div class="main-wrap">
+
+  <!-- Opening -->
+  <div class="opening-block">
+    <div class="opening-quote">
+      "모세와 아론이 파라오에게 가서 말하였다.<br>
+      '여호와 이스라엘의 하나님께서 이렇게 말씀하십니다.<br>
+      내 백성을 보내라…'"
+    </div>
+    <p class="verse-ref">출애굽기 5:1</p>
+    <div class="opening-body">
+      <p>이 첫 구절은 단순한 요구가 아닙니다. 창세로부터 이어져 온 하나님의 뜻이, 역사 속 한 장면에서 드러나는 순간입니다. 하나님은 사람을 창조하실 때부터 단순히 존재하게 하려는 것이 아니라, 그분을 섬기고 그분과 함께하는 존재로 부르셨습니다.</p>
+      <p>"내 백성을 보내라"는 말씀은 곧 이 선언입니다 — <strong style="color:var(--parchment);">내가 창조한 사람을 다시 나에게로 돌려놓겠다.</strong></p>
+    </div>
+  </div>
+
+  <!-- 파라오의 도전 -->
+  <section class="section-block">
+    <p class="section-label">The Challenge</p>
+    <h2 class="section-heading">여호와가 누구인가</h2>
+
+    <div class="pharaoh-challenge">
+      <p class="challenge-text">"여호와가 누구인데 내가 그의 말을 듣고<br>이스라엘을 보내야 한단 말이냐?"</p>
+      <p class="challenge-ref">출애굽기 5:2</p>
+    </div>
+
+    <div class="section-body">
+      <p>이 질문은 단순한 무지가 아닙니다. 타락한 인간과 세상의 본질을 드러냅니다. 하나님 없이도 살 수 있다고 여기는 마음, 창조주를 알지 못하겠다는 선언. 이 순간, 이야기는 단순한 해방 서사가 아니라 하나님과 인간 세계의 충돌로 확장됩니다.</p>
+    </div>
+  </section>
+
+  <!-- 짚 없는 벽돌 -->
+  <section class="section-block">
+    <p class="section-label">The Bondage</p>
+    <h2 class="section-heading">짚 없이 벽돌을 만들어라</h2>
+
+    <div class="inline-quote">
+      <p>"너희는 짚을 주지 않겠다… 그러나 벽돌은 그대로 만들어라."</p>
+      <span class="ref">출애굽기 5:18</span>
+    </div>
+
+    <div class="section-body">
+      <p>세상은 사람에게 끊임없이 요구하지만, 공급하지 않습니다. 일은 늘어나고, 자유는 줄어들며, 삶은 점점 무거워집니다. 하나님을 떠난 인간은 결국 일의 노예, 구조의 노예, 환경의 노예가 됩니다.</p>
+      <p>그래서 백성은 모세를 원망합니다. "그대들이 우리를 더 힘들게 만들었다." (출 5:21) 여기서 우리는 깨닫습니다 — 하나님의 부르심이 시작될 때, 상황은 종종 더 나빠 보입니다. 그러나 그것은 실패가 아니라, <strong style="color:var(--parchment);">진짜 상태를 드러내는 과정</strong>입니다.</p>
+    </div>
+  </section>
+
+  <!-- 나는 여호와다 -->
+  <section class="section-block">
+    <p class="section-label">The Revelation</p>
+    <h2 class="section-heading">나는 여호와다</h2>
+
+    <div class="section-body">
+      <p>모세조차 흔들립니다. "주님, 어찌하여 이 백성을 학대하십니까?" (출 5:22) 하나님의 일을 이해하려 하지만 눈앞의 현실에 막히는 연약함입니다.</p>
+    </div>
+
+    <div class="inline-quote">
+      <p>"나는 여호와다."</p>
+      <span class="ref">출애굽기 6:2</span>
+    </div>
+
+    <div class="section-body">
+      <p>이 선언은 모든 이야기의 중심입니다. 하나님은 상황을 설명하지 않으시고, 자신을 계시하십니다. 구원의 목적은 환경 변화가 아니라 <strong style="color:var(--parchment);">관계의 회복</strong>입니다 — 하나님의 백성이 되는 것.</p>
+      <p>그러나 백성은 이 말을 듣지 못합니다. "영의 괴로움과 혹독한 속박 때문에…" (출 6:9) 고통은 사람의 귀를 막습니다. 그래서 하나님은 단순히 말씀만 하시지 않고, 행동으로 자신을 드러내기 시작하십니다.</p>
+    </div>
+  </section>
+
+</div><!-- /main-wrap -->
+
+<!-- ═══ 열 재앙 ═══ -->
+<section class="plague-section">
+  <div class="main-wrap">
+    <p class="section-label" style="margin-bottom:1.2rem;">The Ten Plagues</p>
+    <h2 class="section-heading" style="margin-bottom:1rem;">열 가지 재앙</h2>
+    <p class="section-body" style="margin-bottom:0;">
+      재앙은 점점 확대됩니다 — 환경, 몸, 생태계, 삶의 기반까지. 그리고 과정 속에서 반복되는 한 문장이 있습니다. <strong style="color:var(--parchment);">"파라오는 마음을 굳어지게 하였다."</strong> 하나님의 빛이 비칠수록, 거부하는 자에게는 더 단단하게 만드는 역할도 합니다.
+    </p>
+  </div>
+
+  <div class="main-wrap" style="margin-top:0;">
+    <div class="plague-grid">
+      <div class="plague-cell">
+        <div class="plague-number">I</div>
+        <div class="plague-name">피</div>
+        <div class="plague-meaning">강물이 피로 변함<br>출 7:14–25</div>
+      </div>
+      <div class="plague-cell">
+        <div class="plague-number">II</div>
+        <div class="plague-name">개구리</div>
+        <div class="plague-meaning">온 땅을 뒤덮음<br>출 8:1–15</div>
+      </div>
+      <div class="plague-cell">
+        <div class="plague-number">III</div>
+        <div class="plague-name">이</div>
+        <div class="plague-meaning">티끌이 이로 변함<br>출 8:16–19</div>
+      </div>
+      <div class="plague-cell">
+        <div class="plague-number">IV</div>
+        <div class="plague-name">파리</div>
+        <div class="plague-meaning">고센은 구별됨<br>출 8:20–32</div>
+      </div>
+      <div class="plague-cell">
+        <div class="plague-number">V</div>
+        <div class="plague-name">가축 전염병</div>
+        <div class="plague-meaning">이스라엘의 것은 안전<br>출 9:1–7</div>
+      </div>
+      <div class="plague-cell">
+        <div class="plague-number">VI</div>
+        <div class="plague-name">종기</div>
+        <div class="plague-meaning">사람과 짐승에게<br>출 9:8–12</div>
+      </div>
+      <div class="plague-cell">
+        <div class="plague-number">VII</div>
+        <div class="plague-name">우박</div>
+        <div class="plague-meaning">창조 질서를 거슬러<br>출 9:13–35</div>
+      </div>
+      <div class="plague-cell">
+        <div class="plague-number">VIII</div>
+        <div class="plague-name">메뚜기</div>
+        <div class="plague-meaning">남은 것을 먹어치움<br>출 10:1–20</div>
+      </div>
+      <div class="plague-cell" style="background:var(--abyss);">
+        <div class="plague-number" style="opacity:0.6;">IX</div>
+        <div class="plague-name" style="color:var(--ash);">어둠</div>
+        <div class="plague-meaning">세 일 동안<br>출 10:21–29</div>
+      </div>
+      <div class="plague-cell darkness">
+        <div class="plague-number" style="font-size:2rem;opacity:0.5;margin-bottom:0.8rem;">X</div>
+        <div class="plague-name">흑암 — 창세 이전의 상태</div>
+        <div class="plague-meaning" style="max-width:360px;margin:0.6rem auto 0;font-size:0.85rem;line-height:1.7;">
+          "삼 일 동안 짙은 어둠이 덮였다." (출 10:22)<br>
+          이것은 창세기 "빛이 있으라" 이전 상태를 떠올리게 합니다.<br>
+          하나님은 지금 무너진 창조를 다시 다루고 계신 것입니다.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="main-wrap">
+
+  <!-- 어둠 속의 빛 -->
+  <section class="section-block">
+    <p class="section-label">Light in Darkness</p>
+    <h2 class="section-heading">고센에는 빛이 있었다</h2>
+
+    <div class="light-contrast">
+      <div class="contrast-panel dark-side">
+        <p class="contrast-label">이집트 · Egypt</p>
+        <p class="contrast-text">온 땅에<br>짙은 어둠이<br>임하였다</p>
+      </div>
+      <div class="contrast-panel light-side">
+        <p class="contrast-label">고센 · Goshen</p>
+        <p class="contrast-text">이스라엘 자손이<br>거주하는 곳에는<br>빛이 있었다</p>
+      </div>
+    </div>
+
+    <div class="inline-quote" style="margin-top:2rem;">
+      <p>"이스라엘 자손이 거주하는 곳에는 빛이 있었다."</p>
+      <span class="ref">출애굽기 10:23</span>
+    </div>
+
+    <div class="section-body">
+      <p>빛은 단순히 환경이 아니라 하나님과의 관계 안에서 존재하는 생명입니다. 세상이 어두워질수록, 하나님의 백성은 더 분명히 드러납니다. 하나님의 경륜은 단순히 세상을 심판하는 것이 아니라, 그 안에서 자신의 백성을 구별하고 형성하는 것입니다.</p>
+    </div>
+  </section>
+
+  <!-- 파라오의 굴복과 반복 -->
+  <section class="section-block">
+    <p class="section-label">The Pattern</p>
+    <h2 class="section-heading">굴복과 반복 — 인간의 본질</h2>
+
+    <div class="section-body">
+      <p>재앙이 깊어질수록, 파라오는 잠시 굴복합니다. "내가 죄를 지었다… 너희를 보내 주겠다." (출 9:27) 그러나 상황이 나아지면 다시 돌아섭니다.</p>
+      <p>고통 속에서는 하나님을 찾지만, 평안이 오면 다시 자신으로 돌아갑니다. 그래서 하나님은 단순한 기적이 아니라, <strong style="color:var(--parchment);">근본적인 변화</strong>를 이루시려 합니다.</p>
+    </div>
+  </section>
+
+</div><!-- /main-wrap -->
+
+<!-- ═══ 경륜의 흐름 ═══ -->
+<section class="flow-section">
+  <div class="main-wrap">
+    <p class="section-label" style="margin-bottom:1.2rem;">God's Eternal Purpose</p>
+    <h2 class="section-heading" style="margin-bottom:0.8rem;">하나님 경륜의 흐름</h2>
+    <p class="section-body">이 모든 이야기를 따라가다 보면, 하나의 흐름이 드러납니다.</p>
+
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-step-icon">✦</div>
+        <div>
+          <div class="flow-step-text">창조</div>
+          <div class="flow-step-sub">함께하는 존재로 부르심</div>
+        </div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step">
+        <div class="flow-step-icon">✦</div>
+        <div>
+          <div class="flow-step-text">타락</div>
+          <div class="flow-step-sub">하나님을 떠난 인간</div>
+        </div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step">
+        <div class="flow-step-icon">✦</div>
+        <div>
+          <div class="flow-step-text">속박</div>
+          <div class="flow-step-sub">일의 노예, 구조의 노예</div>
+        </div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step">
+        <div class="flow-step-icon">✦</div>
+        <div>
+          <div class="flow-step-text">부르심</div>
+          <div class="flow-step-sub">"나는 여호와다"</div>
+        </div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step">
+        <div class="flow-step-icon">✦</div>
+        <div>
+          <div class="flow-step-text">충돌과 드러남</div>
+          <div class="flow-step-sub">열 재앙 — 하나님을 알게 하심</div>
+        </div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step">
+        <div class="flow-step-icon">✦</div>
+        <div>
+          <div class="flow-step-text">구별</div>
+          <div class="flow-step-sub">고센의 빛 — 백성의 형성</div>
+        </div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-final">
+        <div class="flow-final-text">
+          관계의 회복<br>
+          <span style="font-size:0.85rem;font-weight:400;color:var(--gold);">"너희를 내 백성으로 삼겠다"</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="main-wrap">
+
+  <!-- 결론 -->
+  <section class="conclusion-block">
+    <p class="conclusion-eyebrow">The Purpose · 경륜의 목적</p>
+    <h2 class="conclusion-main">
+      사람이 하나님을 알게 되는 것
+    </h2>
+    <div class="conclusion-body">
+      <p>모든 재앙, 모든 충돌, 모든 과정은 결국 한 목적을 향합니다. 그 앎은 단순한 지식이 아니라, 그분의 백성으로 그분과 함께 살아가는 연합의 삶으로 이어집니다.</p>
+      <p>세상은 여전히 파라오처럼 물을 수 있습니다. "여호와가 누구인가?" 그러나 이야기의 끝에서 드러나는 것은 — 하나님의 경륜은 단순히 사람을 고통에서 건지는 것이 아니라, <strong style="color:var(--parchment);">사람을 하나님 자신께로 이끄는 것</strong>이라는 사실입니다.</p>
+    </div>
+
+    <div class="final-verse">
+      <p>"내 백성을 보내라.<br>그들이 나를 섬길 것이다."</p>
+      <span class="ref">출애굽기 8:1 — 시작이자, 끝까지 이어지는 목적</span>
+    </div>
+  </section>
+
+</div><!-- /main-wrap -->
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <p class="footer-series">하나님의 영원한 경륜 시리즈</p>
+  <p class="footer-church">부산교회</p>
+  <p class="footer-range">출애굽기 · Exodus 5–10</p>
+</footer>
+
+<script>
+/* ── HERO CANVAS: 어둠 속 불꽃 파티클 + 고센 빛 ── */
+(function() {
+  const canvas = document.getElementById('heroCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], lightBeam = [];
+  let tick = 0;
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // 불꽃/재 파티클
+  function spawnParticle() {
+    const side = Math.random() > 0.5;
+    return {
+      x: Math.random() * W,
+      y: H + 10,
+      vx: (Math.random() - 0.5) * 0.6,
+      vy: -(Math.random() * 1.2 + 0.4),
+      size: Math.random() * 2.5 + 0.5,
+      life: 0,
+      maxLife: Math.random() * 180 + 80,
+      type: Math.random() < 0.3 ? 'ember' : 'ash'
+    };
+  }
+
+  // 상단 중앙에서 퍼지는 빛줄기 배열
+  for (let i = 0; i < 12; i++) {
+    lightBeam.push({
+      angle: -Math.PI/2 + (Math.random() - 0.5) * 0.9,
+      len: Math.random() * 180 + 80,
+      alpha: Math.random() * 0.06 + 0.02,
+      speed: Math.random() * 0.002 + 0.001,
+      phase: Math.random() * Math.PI * 2
+    });
+  }
+
+  for (let i = 0; i < 80; i++) particles.push(spawnParticle());
+
+  function draw() {
+    tick++;
+    ctx.clearRect(0, 0, W, H);
+
+    // 배경 그라디언트 — 어둠
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, '#05060F');
+    bg.addColorStop(0.6, '#0B0D1A');
+    bg.addColorStop(1, '#16213E');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // 중앙 아래에서 올라오는 미세한 황금빛 glow
+    const glow = ctx.createRadialGradient(W/2, H*0.62, 0, W/2, H*0.62, W * 0.45);
+    glow.addColorStop(0, 'rgba(200,146,42,0.12)');
+    glow.addColorStop(0.5, 'rgba(200,146,42,0.04)');
+    glow.addColorStop(1, 'transparent');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, W, H);
+
+    // 빛줄기 (상단)
+    ctx.save();
+    ctx.translate(W/2, H * 0.35);
+    lightBeam.forEach(b => {
+      const a = b.alpha * (0.8 + 0.2 * Math.sin(tick * b.speed + b.phase));
+      ctx.save();
+      ctx.rotate(b.angle);
+      const lg = ctx.createLinearGradient(0, 0, 0, b.len);
+      lg.addColorStop(0, `rgba(240,160,64,${a})`);
+      lg.addColorStop(1, 'transparent');
+      ctx.fillStyle = lg;
+      ctx.fillRect(-1.5, 0, 3, b.len);
+      ctx.restore();
+    });
+    ctx.restore();
+
+    // 파티클
+    particles.forEach((p, i) => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life++;
+      if (p.life > p.maxLife || p.y < -20) {
+        particles[i] = spawnParticle();
+        return;
+      }
+      const ratio = p.life / p.maxLife;
+      const alpha = ratio < 0.2 ? ratio / 0.2 : 1 - (ratio - 0.2) / 0.8;
+      if (p.type === 'ember') {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(232,118,26,${alpha * 0.7})`;
+        ctx.fill();
+        // glow
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(232,118,26,${alpha * 0.08})`;
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * 0.7, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(138,140,160,${alpha * 0.35})`;
+        ctx.fill();
+      }
+    });
+
+    // 하단 점진적 페이드
+    const fade = ctx.createLinearGradient(0, H * 0.75, 0, H);
+    fade.addColorStop(0, 'transparent');
+    fade.addColorStop(1, '#0B0D1A');
+    ctx.fillStyle = fade;
+    ctx.fillRect(0, H * 0.75, W, H * 0.25);
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── SCROLL REVEAL ── */
+const revealEls = document.querySelectorAll('.section-block, .plague-section, .flow-section, .conclusion-block');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+revealEls.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
