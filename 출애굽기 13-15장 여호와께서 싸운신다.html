@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>출애굽기 13-15장 | 부산교회 성경 시리즈</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Serif+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --night: #0D0A07;
+    --sand: #E8D5A3;
+    --sand-dim: #C4B07A;
+    --deep-sea: #0E2E3D;
+    --sea: #1A4A5C;
+    --sea-light: #2A6E87;
+    --fire: #C9842A;
+    --fire-bright: #E8A23A;
+    --cream: #F0EAD6;
+    --ink: #1A1208;
+    --mist: rgba(240, 234, 214, 0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--night);
+    color: var(--cream);
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 400;
+    line-height: 1.9;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  #sea-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .series-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.35em;
+    color: var(--fire-bright);
+    text-transform: uppercase;
+    margin-bottom: 1.6rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.8rem, 8vw, 6rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--cream);
+    letter-spacing: 0.04em;
+    text-shadow: 0 0 60px rgba(201, 132, 42, 0.4), 0 2px 40px rgba(0,0,0,0.8);
+    opacity: 0;
+    animation: fadeUp 1.1s ease 0.6s forwards;
+  }
+
+  .hero-title span {
+    color: var(--fire-bright);
+  }
+
+  .hero-subtitle {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(0.85rem, 2vw, 1.05rem);
+    font-weight: 300;
+    color: var(--sand);
+    margin-top: 1.2rem;
+    letter-spacing: 0.06em;
+    opacity: 0;
+    animation: fadeUp 1.1s ease 0.9s forwards;
+  }
+
+  .hero-verse {
+    margin-top: 2.5rem;
+    font-size: 0.88rem;
+    color: var(--sand-dim);
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    opacity: 0;
+    animation: fadeUp 1.1s ease 1.2s forwards;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: fadeIn 1.5s ease 2s forwards;
+  }
+
+  .scroll-hint span {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--sand-dim);
+    text-transform: uppercase;
+  }
+
+  .scroll-arrow {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--fire), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 0 2rem;
+    margin: 3rem auto;
+    max-width: 700px;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--fire) 30%, var(--fire) 70%, transparent);
+    opacity: 0.35;
+  }
+
+  .divider-symbol {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--fire);
+    opacity: 0.7;
+  }
+
+  /* ── SECTION STRUCTURE ── */
+  .section {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.85s ease, transform 0.85s ease;
+  }
+
+  .section.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section.no-anim {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .section-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.38em;
+    color: var(--fire);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 600;
+    color: var(--cream);
+    line-height: 1.25;
+    margin-bottom: 2rem;
+    letter-spacing: 0.03em;
+  }
+
+  .section-body {
+    font-size: 1rem;
+    line-height: 2;
+    color: rgba(240, 234, 214, 0.82);
+    font-weight: 300;
+  }
+
+  .section-body p {
+    margin-bottom: 1.4rem;
+  }
+
+  .section-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── VERSE BLOCK ── */
+  .verse-block {
+    border-left: 2px solid var(--fire);
+    padding: 1.1rem 1.5rem;
+    margin: 2rem 0;
+    background: rgba(201, 132, 42, 0.07);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .verse-block p {
+    font-size: 0.95rem;
+    color: var(--sand);
+    font-weight: 400;
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  .verse-ref {
+    display: block;
+    margin-top: 0.5rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--fire-bright);
+  }
+
+  /* ── KEY PHRASE ── */
+  .key-phrase {
+    text-align: center;
+    padding: 3rem 2rem;
+    margin: 2rem 0;
+  }
+
+  .key-phrase p {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.1rem, 3vw, 1.55rem);
+    font-weight: 500;
+    color: var(--cream);
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+    position: relative;
+  }
+
+  .key-phrase p::before,
+  .key-phrase p::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--fire);
+    margin: 1.2rem auto;
+    opacity: 0.6;
+  }
+
+  /* ── HIGHLIGHT WORD ── */
+  .hl {
+    color: var(--fire-bright);
+    font-weight: 500;
+  }
+
+  /* ── VISUAL PANEL ── */
+  .visual-panel {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.85s ease, transform 0.85s ease;
+  }
+
+  .visual-panel.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .visual-canvas-wrap {
+    width: 100%;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .visual-canvas-wrap canvas {
+    display: block;
+    width: 100%;
+  }
+
+  .visual-label {
+    text-align: center;
+    margin-top: 1rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--sand-dim);
+    text-transform: uppercase;
+  }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin: 2.5rem 0;
+  }
+
+  .flow-item {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    border: 1px solid rgba(201, 132, 42, 0.2);
+    border-radius: 4px;
+    background: rgba(201, 132, 42, 0.04);
+  }
+
+  .flow-item-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.6rem;
+    display: block;
+  }
+
+  .flow-item-main {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    color: var(--fire-bright);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .flow-item-sub {
+    font-size: 0.8rem;
+    color: rgba(240, 234, 214, 0.55);
+    font-weight: 300;
+  }
+
+  .flow-arrow {
+    display: none;
+  }
+
+  /* ── CHAPTER HEADER BAND ── */
+  .chapter-band {
+    background: linear-gradient(135deg, var(--deep-sea) 0%, #0A1E28 100%);
+    padding: 3.5rem 2rem;
+    text-align: center;
+    margin: 5rem 0 0;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.85s ease, transform 0.85s ease;
+  }
+
+  .chapter-band.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .chapter-band::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 30% 50%, rgba(26, 74, 92, 0.4) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 50%, rgba(26, 74, 92, 0.25) 0%, transparent 60%);
+  }
+
+  .chapter-band-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .chapter-band .section-eyebrow {
+    color: var(--sea-light);
+  }
+
+  .chapter-band .section-title {
+    color: var(--cream);
+  }
+
+  /* ── FIRE CHAPTER BAND ── */
+  .chapter-band-fire {
+    background: linear-gradient(135deg, #1A0E04 0%, #261506 100%);
+  }
+
+  .chapter-band-fire::before {
+    background: 
+      radial-gradient(ellipse at 30% 50%, rgba(201, 132, 42, 0.25) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 50%, rgba(201, 132, 42, 0.15) 0%, transparent 60%);
+  }
+
+  .chapter-band-fire .section-eyebrow {
+    color: var(--fire-bright);
+  }
+
+  /* ── CONCLUSION ── */
+  .conclusion {
+    background: linear-gradient(180deg, var(--night) 0%, #0A0704 100%);
+    padding: 6rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .conclusion::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--fire));
+    opacity: 0.5;
+  }
+
+  .conclusion-verse {
+    max-width: 640px;
+    margin: 0 auto;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.1rem, 3vw, 1.55rem);
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.6;
+    letter-spacing: 0.05em;
+    text-align: center;
+  }
+
+  .conclusion-verse span {
+    color: var(--fire-bright);
+  }
+
+  .conclusion-ref {
+    margin-top: 1.2rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: var(--fire);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #080604;
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(201, 132, 42, 0.15);
+  }
+
+  .footer-church {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    color: var(--sand-dim);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .footer-series {
+    font-size: 0.78rem;
+    color: rgba(240, 234, 214, 0.3);
+    font-weight: 300;
+    letter-spacing: 0.08em;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.7); }
+    50%       { opacity: 1;   transform: scaleY(1); }
+  }
+
+  @media (max-width: 600px) {
+    .section { padding: 3.5rem 1.4rem; }
+    .flow-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .section, .visual-panel, .chapter-band { transition: none; opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <canvas id="sea-canvas"></canvas>
+  <div class="hero-content">
+    <p class="series-label">부산교회 · 출애굽기 시리즈</p>
+    <h1 class="hero-title">여호와께서<br><span>싸우신다</span></h1>
+    <p class="hero-subtitle">출애굽기 13 — 15장 · 처음 난 것에서 홍해의 노래까지</p>
+    <p class="hero-verse">"여호와께서 너희를 위하여 싸우실 것이니 너희는 가만히 있을지니라" — 출 14:14</p>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ══ 처음 난 것 ══ -->
+<article class="section" id="s1">
+  <p class="section-eyebrow">출애굽기 13장 · 첫째 날</p>
+  <h2 class="section-title">처음 난 것 —<br>하나님께 속한 생명의 시작</h2>
+  <div class="section-body">
+    <div class="verse-block">
+      <p>"태를 처음 열고 나온 것은 다 나의 것이다."</p>
+      <span class="verse-ref">출애굽기 13:2</span>
+    </div>
+    <p>이것은 단순한 제사의 규정이 아닙니다. 하나님께서 사람에게 요구하시는 헌신의 문제가 아니라, <span class="hl">생명의 근원이 누구인가를 밝히는 선언</span>입니다.</p>
+    <p>창조 때 하나님은 생명을 주셨고, 이제 구속을 통해 그 생명을 다시 회복하십니다. "처음 것"은 시작을 의미하고, 시작은 곧 <span class="hl">주권</span>을 의미합니다.</p>
+    <div class="key-phrase">
+      <p>"너희의 시작은 나에게 속해 있다."</p>
+    </div>
+    <p>이스라엘은 이제 깨닫기 시작합니다. 출애굽은 단순히 노예 상태에서 벗어난 사건이 아니라, <span class="hl">자신들의 존재 자체가 하나님께 속해 있음을 드러내는 사건</span>이라는 것을.</p>
+  </div>
+</article>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-symbol">✦</div><div class="divider-line"></div></div>
+
+<!-- ══ 기억 ══ -->
+<article class="section" id="s2">
+  <p class="section-eyebrow">기억과 정체성</p>
+  <h2 class="section-title">기억하라 — 삶을 재구성하는 명령</h2>
+  <div class="section-body">
+    <div class="verse-block">
+      <p>"여러분은 이집트에서 나온 이날을 기억하십시오."</p>
+      <span class="verse-ref">출애굽기 13:3</span>
+    </div>
+    <p>기억은 단순한 회상이 아닙니다. <span class="hl">기억은 정체성을 형성합니다.</span> 하나님은 그들의 입과 손과 눈 사이에 이 사건을 새기라고 하십니다. 삶 전체가 하나님의 구속을 중심으로 재구성되어야 한다는 뜻입니다.</p>
+  </div>
+</article>
+
+<!-- ══ 누룩 없는 삶 ══ -->
+<article class="section" id="s3">
+  <p class="section-eyebrow">무교병과 새 생명</p>
+  <h2 class="section-title">누룩 없는 삶 — 새로운 생명의 방식</h2>
+  <div class="section-body">
+    <div class="verse-block">
+      <p>"누룩이 든 것을 먹어서는 안 됩니다."</p>
+      <span class="verse-ref">출애굽기 13:3</span>
+    </div>
+    <p>누룩은 보이지 않게 퍼져 전체를 변화시키는 성질을 가집니다. 하나님은 이스라엘에게 이전 삶의 방식, 곧 애굽의 체질을 남겨두지 말라고 하십니다.</p>
+    <p>구원은 단순히 위치의 변화가 아니라, <span class="hl">본질의 변화</span>입니다. 무교병은 혼합되지 않은 생명, 하나님께서 시작하신 그대로의 생명을 의미합니다.</p>
+    <div class="verse-block">
+      <p>"장차 너의 아들이 '이것이 무슨 일입니까?'라고 물으면…"</p>
+      <span class="verse-ref">출애굽기 13:14</span>
+    </div>
+    <p>하나님의 경륜은 개인에서 끝나지 않습니다. <span class="hl">세대를 이어 흐르는 생명의 이야기</span>입니다. 기억과 증언을 통해 공동체를 형성하십니다.</p>
+  </div>
+</article>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-symbol">☁</div><div class="divider-line"></div></div>
+
+<!-- ══ 돌아가는 길 ══ -->
+<div class="chapter-band" id="cb1">
+  <div class="chapter-band-content">
+    <p class="section-eyebrow">출애굽기 13:17 — 인도의 방식</p>
+    <h2 class="section-title">돌아가는 길 — 사람의 상태를 아시는 하나님</h2>
+  </div>
+</div>
+
+<article class="section" id="s4">
+  <div class="section-body">
+    <div class="verse-block">
+      <p>"하나님은 블레셋 사람들의 땅을 거쳐 가는 것이 가까운데도 그 길로 인도하지 않으셨다."</p>
+      <span class="verse-ref">출애굽기 13:17</span>
+    </div>
+    <p>왜입니까? "전쟁을 하게 되면 마음이 바뀌어 돌아갈 것이다." 하나님은 목적지보다 <span class="hl">사람의 상태</span>를 더 중요하게 여기십니다.</p>
+    <p>가나안에 들어가는 것이 목적이지만, 그보다 먼저 <span class="hl">그들이 하나님을 신뢰하는 존재로 변화되는 것</span>이 필요합니다.</p>
+    <div class="key-phrase">
+      <p>인간의 눈에는 비효율처럼 보이지만,<br>하나님의 경륜 안에서는 가장 정확한 길입니다.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ══ 구름과 불 ══ -->
+<div class="chapter-band chapter-band-fire" id="cb2">
+  <div class="chapter-band-content">
+    <p class="section-eyebrow">출애굽기 13:21 — 임재의 표징</p>
+    <h2 class="section-title">구름과 불 — 함께하시는 임재</h2>
+  </div>
+</div>
+
+<article class="section" id="s5">
+  <div class="section-body">
+    <div class="verse-block">
+      <p>"낮에는 구름 기둥으로 그들을 인도하시고 밤에는 불 기둥으로 그들에게 빛을 주셨다."</p>
+      <span class="verse-ref">출애굽기 13:21</span>
+    </div>
+    <p>이제 하나님은 더 이상 멀리 계신 분이 아닙니다. 그분은 앞서 가시고, 때로는 뒤에서 막으시며, 진영 사이에 서시는 분이십니다.</p>
+    <p>이 임재는 단순한 보호가 아니라, <span class="hl">동행</span>입니다. 창세기에서 하나님은 사람과 함께 동산을 거니셨습니다. 죄로 인해 끊어진 그 동행이, 출애굽에서 다시 시작됩니다.</p>
+    <p>구름과 불은 단순한 표지가 아니라, <span class="hl">회복된 관계의 증거</span>입니다.</p>
+  </div>
+</article>
+
+<!-- ══ 시각 패널 : 홍해 캔버스 ══ -->
+<div class="visual-panel" id="vp1">
+  <div class="visual-canvas-wrap">
+    <canvas id="sea-part-canvas" height="300"></canvas>
+  </div>
+  <p class="visual-label">홍해가 갈라지다 · 출애굽기 14:21</p>
+</div>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-symbol">⊕</div><div class="divider-line"></div></div>
+
+<!-- ══ 홍해 앞 ══ -->
+<article class="section" id="s6">
+  <p class="section-eyebrow">출애굽기 14장 · 홍해의 기적</p>
+  <h2 class="section-title">홍해 앞 — 막다른 길에서 드러나는 하나님의 의도</h2>
+  <div class="section-body">
+    <p>하나님은 이스라엘을 바다 앞에 세우십니다. 뒤에는 애굽 군대, 앞에는 바다. 사람의 눈에는 <span class="hl">완벽한 막다른 길</span>입니다.</p>
+    <div class="verse-block">
+      <p>"우리를 여기서 죽게 하려고 데려왔습니까?"</p>
+      <span class="verse-ref">출애굽기 14:11</span>
+    </div>
+    <p>이 장면은 인간의 본성을 드러냅니다. 구원을 경험했지만, 여전히 두려움에 사로잡힌 존재. 그러나 바로 그 자리에서 하나님은 말씀하십니다.</p>
+    <div class="verse-block">
+      <p>"여호와께서 여러분을 위하여 싸우실 것이니 여러분은 가만히 있으십시오."</p>
+      <span class="verse-ref">출애굽기 14:14</span>
+    </div>
+    <p>여기서 중요한 전환이 일어납니다. 출애굽의 초기에는 사람이 움직이고 하나님이 역사하시는 구조였다면, 이제는 <span class="hl">하나님이 싸우시고 사람은 서 있는 구조</span>로 바뀝니다.</p>
+    <div class="key-phrase">
+      <p>구원은 인간의 노력으로 완성되지 않습니다.<br>하나님의 전적인 행위입니다.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ══ 창조의 재현 ══ -->
+<article class="section" id="s7">
+  <p class="section-eyebrow">출애굽기 14:21 — 창조의 재현</p>
+  <h2 class="section-title">바다를 가르심 — 새로운 창조의 시작</h2>
+  <div class="section-body">
+    <div class="verse-block">
+      <p>"바닷물이 갈라지고 마른 땅이 되었다."</p>
+      <span class="verse-ref">출애굽기 14:21</span>
+    </div>
+    <p>이 장면은 단순한 기적이 아닙니다. 이것은 <span class="hl">창조의 재현</span>입니다. 창세기에서 하나님은 물을 나누시고 땅을 드러내셨습니다. 이제 홍해에서도 동일한 일이 일어납니다.</p>
+    <p>하나님은 단순히 이스라엘을 구출하는 것이 아니라, <span class="hl">그들을 새로운 창조로 이끌고 계신 것</span>입니다. 바다는 죽음을 상징합니다. 그러나 그 죽음의 한가운데를 지나며, 이스라엘은 새로운 존재로 태어납니다.</p>
+    <div class="key-phrase">
+      <p>이것은 하나의 집단적 '탄생' 사건입니다.</p>
+    </div>
+  </div>
+</article>
+
+<!-- ══ 심판과 구원 ══ -->
+<article class="section" id="s8">
+  <p class="section-eyebrow">출애굽기 14:28 — 같은 길, 다른 운명</p>
+  <h2 class="section-title">심판과 구원 — 같은 자리에서 나뉘는 길</h2>
+  <div class="section-body">
+    <p>같은 바다, 같은 길. 이스라엘에게는 생명의 길이었고, 애굽에게는 죽음의 길이었습니다.</p>
+    <div class="verse-block">
+      <p>"물은 그들 위로 다시 돌아왔다."</p>
+      <span class="verse-ref">출애굽기 14:28</span>
+    </div>
+    <p>하나님의 행위는 항상 두 방향을 동시에 가집니다. <span class="hl">구원과 심판</span>. 이것은 하나님의 거룩함에서 비롯됩니다.</p>
+    <div class="verse-block">
+      <p>"백성은 여호와를 경외하며… 믿었다."</p>
+      <span class="verse-ref">출애굽기 14:31</span>
+    </div>
+    <p>이제 그들의 믿음은 단순한 말이 아니라, <span class="hl">경험을 통해 형성된 신뢰</span>입니다.</p>
+  </div>
+</article>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-symbol">♪</div><div class="divider-line"></div></div>
+
+<!-- ══ 노래 ══ -->
+<div class="chapter-band" id="cb3">
+  <div class="chapter-band-content">
+    <p class="section-eyebrow">출애굽기 15장 · 구원받은 자의 노래</p>
+    <h2 class="section-title">노래 — 구원받은 자의 자연스러운 반응</h2>
+  </div>
+</div>
+
+<article class="section" id="s9">
+  <div class="section-body">
+    <div class="verse-block">
+      <p>"여호와께서 영광스럽게 승리하셨으니…"</p>
+      <span class="verse-ref">출애굽기 15:1</span>
+    </div>
+    <p>구원은 반드시 노래를 낳습니다. 왜냐하면 구원은 인간의 언어로 설명할 수 없는 은혜이기 때문입니다. 모세의 노래는 단순한 찬양이 아닙니다. 그것은 <span class="hl">하나님의 본질에 대한 선언</span>입니다.</p>
+    <div class="verse-block">
+      <p>"주님은 그들을 주님의 거룩한 처소로 이끌어 내셨습니다."</p>
+      <span class="verse-ref">출애굽기 15:13</span>
+    </div>
+    <p>구원은 끝이 아니라 시작입니다. 목적지는 <span class="hl">하나님이 거하시는 곳</span>, 곧 하나님과의 연합입니다.</p>
+  </div>
+</article>
+
+<!-- ══ 마라와 엘림 ══ -->
+<article class="section" id="s10">
+  <p class="section-eyebrow">출애굽기 15:23-27 — 시험과 공급</p>
+  <h2 class="section-title">마라와 엘림 — 구원 이후의 시험과 공급</h2>
+  <div class="section-body">
+    <div class="verse-block">
+      <p>"그 물이 써서 마실 수 없었다."</p>
+      <span class="verse-ref">출애굽기 15:23</span>
+    </div>
+    <p>하나님은 구원 직후에 시험을 허락하십니다. 구원이 목적이 아니라, <span class="hl">하나님과의 관계 속에서 사는 법을 배우는 것</span>이 목적이기 때문입니다.</p>
+    <p>모세가 나무를 던지자 물이 달게 됩니다. 쓴 것을 단 것으로 바꾸는 하나님의 방식.</p>
+    <div class="verse-block">
+      <p>"나는 너희를 치료하는 여호와다."</p>
+      <span class="verse-ref">출애굽기 15:26</span>
+    </div>
+    <p>하나님은 단순히 구원자가 아니라, <span class="hl">지속적으로 생명을 유지시키는 분</span>으로 자신을 계시하십니다.</p>
+    <div class="verse-block">
+      <p>"거기에 샘 열두 개와 야자나무 일흔 그루가 있었다."</p>
+      <span class="verse-ref">출애굽기 15:27</span>
+    </div>
+    <p>시험 뒤에는 공급이 있습니다. 하나님은 결핍만 주시는 분이 아니라, <span class="hl">적절한 때에 풍성함을 주시는 분</span>입니다.</p>
+  </div>
+</article>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-symbol">✦</div><div class="divider-line"></div></div>
+
+<!-- ══ 경륜의 흐름 ══ -->
+<article class="section" id="s11">
+  <p class="section-eyebrow">하나님의 궁극적인 경륜</p>
+  <h2 class="section-title">창조에서 연합까지 — 경륜의 흐름</h2>
+  <div class="section-body">
+    <div class="flow-grid">
+      <div class="flow-item">
+        <span class="flow-item-icon">🌱</span>
+        <span class="flow-item-main">창조</span>
+        <span class="flow-item-sub">생명의 시작</span>
+      </div>
+      <div class="flow-item">
+        <span class="flow-item-icon">⛓</span>
+        <span class="flow-item-main">구속</span>
+        <span class="flow-item-sub">하나님의 소유됨</span>
+      </div>
+      <div class="flow-item">
+        <span class="flow-item-icon">☁</span>
+        <span class="flow-item-main">인도</span>
+        <span class="flow-item-sub">관계의 회복</span>
+      </div>
+      <div class="flow-item">
+        <span class="flow-item-icon">🌊</span>
+        <span class="flow-item-main">통과</span>
+        <span class="flow-item-sub">새 존재로의 탄생</span>
+      </div>
+      <div class="flow-item">
+        <span class="flow-item-icon">🎵</span>
+        <span class="flow-item-main">찬양</span>
+        <span class="flow-item-sub">하나님 인식</span>
+      </div>
+      <div class="flow-item">
+        <span class="flow-item-icon">💧</span>
+        <span class="flow-item-main">시험·공급</span>
+        <span class="flow-item-sub">지속되는 생명</span>
+      </div>
+    </div>
+    <p>결국 하나님이 이루시고자 하는 것은 단순한 "구출"이 아닙니다. 그분의 목적은 분명합니다. <span class="hl">자신의 생명을 사람 안에 심고, 그들을 인도하여, 마침내 하나님과 함께 거하는 존재로 만드는 것.</span></p>
+  </div>
+</article>
+
+<!-- ══ 결론 ══ -->
+<section class="conclusion" id="conclusion">
+  <div style="opacity:0;transform:translateY(28px);transition:opacity 0.9s ease,transform 0.9s ease;" class="conclusion-inner">
+    <p class="conclusion-verse">
+      "<span>여호와께서</span> 영원무궁히<br>왕으로서 다스리실 것입니다."
+    </p>
+    <p class="conclusion-ref">출애굽기 15:18</p>
+    <div class="divider" style="margin-top:3rem;max-width:400px;">
+      <div class="divider-line"></div>
+      <div class="divider-symbol">✦</div>
+      <div class="divider-line"></div>
+    </div>
+    <p style="margin-top:2rem;font-size:0.9rem;color:rgba(240,234,214,0.45);font-weight:300;letter-spacing:0.05em;max-width:480px;margin-left:auto;margin-right:auto;">출애굽은 그 시작일 뿐입니다.<br>하나님이 다스리시는 세계, 하나님과 사람이 연합된 상태 —<br>그것이 경륜의 결론입니다.</p>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <p class="footer-church">부산교회 · Busan Church</p>
+  <p class="footer-series">구약 성경 시리즈 · 출애굽기 편</p>
+</footer>
+
+<script>
+/* ── Hero Sea Canvas ── */
+(function() {
+  const canvas = document.getElementById('sea-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, t = 0;
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function drawSea() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Deep background gradient
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, '#050302');
+    bg.addColorStop(0.5, '#0A1E28');
+    bg.addColorStop(1, '#050302');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Stars
+    ctx.save();
+    for (let i = 0; i < 120; i++) {
+      const sx = (Math.sin(i * 4.7 + 1.3) * 0.5 + 0.5) * W;
+      const sy = (Math.sin(i * 3.1 + 0.7) * 0.5 + 0.5) * H * 0.55;
+      const brightness = (Math.sin(t * 0.8 + i * 1.1) * 0.4 + 0.6);
+      ctx.globalAlpha = brightness * 0.5;
+      ctx.fillStyle = '#E8D5A3';
+      ctx.beginPath();
+      ctx.arc(sx, sy, 0.8 + brightness * 0.6, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    // Sea waves — left wall
+    const waveCount = 7;
+    for (let wi = 0; wi < waveCount; wi++) {
+      const progress = wi / waveCount;
+      const baseX = W * 0.5 - 80 - progress * W * 0.45;
+      ctx.save();
+      ctx.globalAlpha = 0.08 + progress * 0.14;
+      const wg = ctx.createLinearGradient(baseX - 40, 0, baseX + 60, 0);
+      wg.addColorStop(0, '#0E2E3D');
+      wg.addColorStop(0.5, '#1A4A5C');
+      wg.addColorStop(1, '#2A6E87');
+      ctx.fillStyle = wg;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      for (let y = 0; y <= H; y += 4) {
+        const wave = Math.sin(y * 0.012 + t * 1.2 + wi * 0.8) * (12 + progress * 18);
+        ctx.lineTo(baseX + wave, y);
+      }
+      ctx.lineTo(0, H);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // Sea waves — right wall
+    for (let wi = 0; wi < waveCount; wi++) {
+      const progress = wi / waveCount;
+      const baseX = W * 0.5 + 80 + progress * W * 0.45;
+      ctx.save();
+      ctx.globalAlpha = 0.08 + progress * 0.14;
+      const wg = ctx.createLinearGradient(baseX - 60, 0, baseX + 40, 0);
+      wg.addColorStop(0, '#2A6E87');
+      wg.addColorStop(0.5, '#1A4A5C');
+      wg.addColorStop(1, '#0E2E3D');
+      ctx.fillStyle = wg;
+      ctx.beginPath();
+      ctx.moveTo(W, 0);
+      for (let y = 0; y <= H; y += 4) {
+        const wave = Math.sin(y * 0.012 + t * 1.2 + wi * 0.8 + Math.PI) * (12 + progress * 18);
+        ctx.lineTo(baseX + wave, y);
+      }
+      ctx.lineTo(W, H);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // Dry path glow
+    const pathGrad = ctx.createLinearGradient(W*0.35, H*0.5, W*0.65, H*0.5);
+    pathGrad.addColorStop(0, 'transparent');
+    pathGrad.addColorStop(0.3, 'rgba(201,132,42,0.04)');
+    pathGrad.addColorStop(0.5, 'rgba(232,213,163,0.06)');
+    pathGrad.addColorStop(0.7, 'rgba(201,132,42,0.04)');
+    pathGrad.addColorStop(1, 'transparent');
+    ctx.fillStyle = pathGrad;
+    ctx.fillRect(W*0.35, H*0.35, W*0.3, H*0.45);
+
+    // Fire pillar glow at top center
+    const fireGrad = ctx.createRadialGradient(W*0.5, H*0.15, 0, W*0.5, H*0.15, W*0.18);
+    fireGrad.addColorStop(0, 'rgba(232,162,58,0.18)');
+    fireGrad.addColorStop(0.5, 'rgba(201,132,42,0.06)');
+    fireGrad.addColorStop(1, 'transparent');
+    ctx.fillStyle = fireGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    t += 0.016;
+    requestAnimationFrame(drawSea);
+  }
+  drawSea();
+})();
+
+/* ── Parting Sea Mini Canvas ── */
+(function() {
+  const canvas = document.getElementById('sea-part-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, t2 = 0, opened = false, openProgress = 0;
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = 300;
+    canvas.height = H;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) opened = true;
+  }, { threshold: 0.3 });
+  observer.observe(canvas);
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Background
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, '#050A0E');
+    bg.addColorStop(1, '#0A1E28');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    if (opened && openProgress < 1) openProgress = Math.min(1, openProgress + 0.008);
+
+    const gap = openProgress * W * 0.36;
+    const cx  = W * 0.5;
+
+    // Left sea wall
+    for (let layer = 5; layer >= 0; layer--) {
+      const layerP = layer / 5;
+      const wallX  = cx - gap * (0.5 + layerP * 0.5);
+      ctx.save();
+      ctx.globalAlpha = 0.12 + layerP * 0.3;
+      const g = ctx.createLinearGradient(wallX - 60, 0, wallX + 20, 0);
+      g.addColorStop(0, '#081820');
+      g.addColorStop(0.6, '#1A4A5C');
+      g.addColorStop(1, '#3A8EA8');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      for (let y = 0; y <= H; y += 3) {
+        const wave = Math.sin(y * 0.02 + t2 * 1.5 + layer * 0.5) * (8 + layerP * 14);
+        ctx.lineTo(wallX + wave, y);
+      }
+      ctx.lineTo(0, H);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // Right sea wall
+    for (let layer = 5; layer >= 0; layer--) {
+      const layerP = layer / 5;
+      const wallX  = cx + gap * (0.5 + layerP * 0.5);
+      ctx.save();
+      ctx.globalAlpha = 0.12 + layerP * 0.3;
+      const g = ctx.createLinearGradient(wallX - 20, 0, wallX + 60, 0);
+      g.addColorStop(0, '#3A8EA8');
+      g.addColorStop(0.4, '#1A4A5C');
+      g.addColorStop(1, '#081820');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.moveTo(W, 0);
+      for (let y = 0; y <= H; y += 3) {
+        const wave = Math.sin(y * 0.02 + t2 * 1.5 + layer * 0.5 + Math.PI) * (8 + layerP * 14);
+        ctx.lineTo(wallX + wave, y);
+      }
+      ctx.lineTo(W, H);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // Dry ground
+    if (openProgress > 0.1) {
+      const groundAlpha = (openProgress - 0.1) / 0.9;
+      const sandGrad = ctx.createLinearGradient(cx - gap*0.45, 0, cx + gap*0.45, 0);
+      sandGrad.addColorStop(0, 'transparent');
+      sandGrad.addColorStop(0.1, `rgba(100,70,30,${groundAlpha * 0.5})`);
+      sandGrad.addColorStop(0.5, `rgba(139,100,50,${groundAlpha * 0.6})`);
+      sandGrad.addColorStop(0.9, `rgba(100,70,30,${groundAlpha * 0.5})`);
+      sandGrad.addColorStop(1, 'transparent');
+      ctx.fillStyle = sandGrad;
+      ctx.fillRect(0, H * 0.55, W, H * 0.45);
+
+      // Ground lines
+      ctx.globalAlpha = groundAlpha * 0.3;
+      ctx.strokeStyle = '#8B6432';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 5; i++) {
+        const lineY = H * 0.65 + i * 12;
+        ctx.beginPath();
+        ctx.moveTo(cx - gap * 0.4, lineY);
+        ctx.lineTo(cx + gap * 0.4, lineY);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    // Fire pillar glow top-center
+    const fireR = ctx.createRadialGradient(cx, H*0.08, 0, cx, H*0.08, H*0.25);
+    fireR.addColorStop(0, 'rgba(232,162,58,0.22)');
+    fireR.addColorStop(0.5, 'rgba(201,132,42,0.08)');
+    fireR.addColorStop(1, 'transparent');
+    ctx.fillStyle = fireR;
+    ctx.fillRect(0, 0, W, H);
+
+    t2 += 0.018;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── Scroll Reveal ── */
+(function() {
+  const targets = document.querySelectorAll('.section, .visual-panel, .chapter-band');
+  const conclusionInner = document.querySelector('.conclusion-inner');
+
+  function revealEl(el) {
+    el.classList.add('revealed');
+  }
+
+  // Immediately reveal anything already in viewport
+  function checkAll() {
+    targets.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight + 60) revealEl(el);
+    });
+    if (conclusionInner) {
+      const r = conclusionInner.getBoundingClientRect();
+      if (r.top < window.innerHeight + 60) {
+        conclusionInner.style.opacity = '1';
+        conclusionInner.style.transform = 'translateY(0)';
+      }
+    }
+  }
+
+  // Also use IntersectionObserver for elements below fold
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { revealEl(e.target); io.unobserve(e.target); }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px 80px 0px' });
+    targets.forEach(el => io.observe(el));
+
+    if (conclusionInner) {
+      const cio = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.style.opacity = '1';
+            e.target.style.transform = 'translateY(0)';
+            cio.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0, rootMargin: '0px 0px 80px 0px' });
+      cio.observe(conclusionInner);
+    }
+  } else {
+    // Fallback: show everything
+    targets.forEach(el => revealEl(el));
+    if (conclusionInner) { conclusionInner.style.opacity='1'; conclusionInner.style.transform='none'; }
+  }
+
+  // Run immediately and on scroll
+  checkAll();
+  window.addEventListener('scroll', checkAll, { passive: true });
+  // Extra safety: run after fonts/images settle
+  setTimeout(checkAll, 400);
+})();
+</script>
+</body>
+</html>
