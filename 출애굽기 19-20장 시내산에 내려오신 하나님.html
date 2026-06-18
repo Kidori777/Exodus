@@ -6,19 +6,21 @@
 <title>출애굽기 19–20장 | 하나님의 영원한 경륜 시리즈</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
+  * { font-style: normal !important; }
+
   :root {
-    --smoke:    #E8E4DE;
-    --ash:      #C9C2B8;
-    --stone:    #7A7068;
+    --smoke:    #F0ECE4;
+    --ash:      #D4CEC4;
+    --stone:    #9A9088;
     --slate:    #3D3830;
     --night:    #1A1712;
-    --ember:    #8B6B3D;
-    --gold:     #C4963A;
+    --ember:    #C4863A;
+    --gold:     #D4A84A;
     --flame:    #D4822A;
-    --cloud:    #F2EFE9;
+    --cloud:    #F8F4EE;
     --deep:     #0F0D0A;
   }
 
@@ -29,8 +31,8 @@
   body {
     background: var(--night);
     color: var(--smoke);
-    font-family: 'Noto Serif KR', 'Cormorant Garamond', serif;
-    font-weight: 300;
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 400;
     line-height: 1.9;
     overflow-x: hidden;
   }
@@ -63,11 +65,10 @@
   }
 
   .series-label {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.78rem;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.88rem;
     font-weight: 400;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
+    letter-spacing: 0.18em;
     color: var(--ash);
     margin-bottom: 28px;
     opacity: 0;
@@ -75,9 +76,9 @@
   }
 
   .hero-ref {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3.8rem, 9vw, 7.5rem);
-    font-weight: 300;
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(4rem, 9vw, 7.5rem);
+    font-weight: 700;
     line-height: 1;
     color: var(--gold);
     letter-spacing: -0.01em;
@@ -87,21 +88,22 @@
 
   .hero-title {
     font-family: 'Noto Serif KR', serif;
-    font-size: clamp(1.15rem, 3vw, 1.75rem);
-    font-weight: 400;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 500;
     color: var(--smoke);
     margin-top: 20px;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.04em;
     opacity: 0;
     animation: fadeUp 1.2s 1.0s forwards;
   }
 
   .hero-sub {
     margin-top: 12px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1rem;
+    font-weight: 400;
     color: var(--ash);
-    letter-spacing: 0.14em;
+    letter-spacing: 0.08em;
     opacity: 0;
     animation: fadeUp 1.2s 1.3s forwards;
   }
@@ -121,11 +123,11 @@
   }
 
   .scroll-hint span {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.72rem;
-    letter-spacing: 0.28em;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
     color: var(--stone);
-    text-transform: uppercase;
   }
 
   .scroll-line {
@@ -147,19 +149,20 @@
     max-width: 680px;
     margin: 0 auto;
     font-family: 'Noto Serif KR', serif;
-    font-size: clamp(1.05rem, 2.5vw, 1.35rem);
-    font-weight: 300;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-weight: 400;
     color: var(--cloud);
-    line-height: 2;
+    line-height: 2.2;
   }
 
   .opening-verse cite {
     display: block;
-    margin-top: 20px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.88rem;
+    margin-top: 24px;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.95rem;
+    font-weight: 500;
     color: var(--gold);
-    letter-spacing: 0.2em;
+    letter-spacing: 0.14em;
   }
 
   /* ── SECTIONS ── */
@@ -178,23 +181,22 @@
   }
 
   .section-marker {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.72rem;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.85rem;
     font-weight: 500;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
+    letter-spacing: 0.16em;
     color: var(--ember);
     margin-bottom: 20px;
   }
 
   .section-title {
     font-family: 'Noto Serif KR', serif;
-    font-size: clamp(1.35rem, 3.5vw, 2rem);
-    font-weight: 500;
+    font-size: clamp(1.4rem, 3.5vw, 2.1rem);
+    font-weight: 700;
     color: var(--smoke);
-    line-height: 1.5;
+    line-height: 1.6;
     margin-bottom: 36px;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
   }
 
   .section-title em {
@@ -204,10 +206,10 @@
 
   .prose {
     font-family: 'Noto Serif KR', serif;
-    font-size: clamp(0.92rem, 2vw, 1.05rem);
-    font-weight: 300;
+    font-size: clamp(1rem, 2vw, 1.08rem);
+    font-weight: 400;
     color: var(--ash);
-    line-height: 2.1;
+    line-height: 2.2;
   }
 
   .prose p { margin-bottom: 1.6em; }
@@ -217,24 +219,25 @@
   .scripture {
     margin: 42px 0;
     padding: 32px 36px;
-    border-left: 2px solid var(--gold);
-    background: rgba(196, 150, 58, 0.06);
+    border-left: 3px solid var(--gold);
+    background: rgba(212, 168, 74, 0.07);
   }
 
   .scripture p {
     font-family: 'Noto Serif KR', serif;
-    font-size: clamp(0.95rem, 2.2vw, 1.1rem);
-    font-weight: 400;
+    font-size: clamp(1rem, 2.2vw, 1.15rem);
+    font-weight: 500;
     color: var(--cloud);
-    line-height: 2;
+    line-height: 2.1;
     margin: 0 0 10px 0;
   }
 
   .scripture cite {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.82rem;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.88rem;
+    font-weight: 500;
     color: var(--gold);
-    letter-spacing: 0.18em;
+    letter-spacing: 0.12em;
   }
 
   /* Divider */
@@ -250,13 +253,12 @@
   .divider-line { flex: 1; height: 1px; background: #2e2820; }
 
   .divider-symbol {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Noto Serif KR', serif;
     font-size: 1.1rem;
     color: var(--ember);
-    letter-spacing: 0.1em;
   }
 
-  /* Tension block – the great contrast */
+  /* Tension block */
   .tension {
     background: linear-gradient(180deg, #0F0D0A 0%, #1a1410 100%);
     border-top: 1px solid #2e2820;
@@ -281,24 +283,24 @@
     text-align: center;
   }
 
-  .tension-cell.left  { background: rgba(255,255,255,0.03); }
-  .tension-cell.right { background: rgba(196,150,58,0.07); }
+  .tension-cell.left  { background: rgba(255,255,255,0.04); }
+  .tension-cell.right { background: rgba(212,168,74,0.08); }
 
   .tension-label {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.72rem;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
     color: var(--stone);
     margin-bottom: 18px;
   }
 
   .tension-text {
     font-family: 'Noto Serif KR', serif;
-    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    font-size: clamp(1rem, 2vw, 1.12rem);
     font-weight: 400;
     color: var(--cloud);
-    line-height: 1.8;
+    line-height: 2;
   }
 
   /* Canvas band – Sinai visualization */
@@ -318,11 +320,11 @@
     bottom: 28px;
     left: 50%;
     transform: translateX(-50%);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.78rem;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.82rem;
+    font-weight: 400;
     color: var(--stone);
-    letter-spacing: 0.26em;
-    text-transform: uppercase;
+    letter-spacing: 0.18em;
     white-space: nowrap;
   }
 
@@ -357,13 +359,13 @@
   }
 
   .cmd-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.6rem;
-    font-weight: 300;
-    color: #2e2820;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #3a3028;
     line-height: 1;
     flex-shrink: 0;
-    padding-top: 4px;
+    padding-top: 6px;
     min-width: 44px;
     text-align: right;
   }
@@ -372,19 +374,19 @@
 
   .cmd-theme {
     font-family: 'Noto Serif KR', serif;
-    font-size: 0.72rem;
-    font-weight: 500;
+    font-size: 0.82rem;
+    font-weight: 700;
     color: var(--ember);
-    letter-spacing: 0.2em;
+    letter-spacing: 0.1em;
     margin-bottom: 6px;
   }
 
   .cmd-word {
     font-family: 'Noto Serif KR', serif;
-    font-size: 0.9rem;
+    font-size: 0.96rem;
     font-weight: 400;
     color: var(--ash);
-    line-height: 1.7;
+    line-height: 1.8;
   }
 
   /* Climax section */
@@ -407,29 +409,29 @@
   .climax-inner.visible { opacity: 1; transform: none; }
 
   .climax-label {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.72rem;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
     color: var(--ember);
     margin-bottom: 32px;
   }
 
   .climax-statement {
     font-family: 'Noto Serif KR', serif;
-    font-size: clamp(1.15rem, 3vw, 1.7rem);
-    font-weight: 400;
+    font-size: clamp(1.2rem, 3vw, 1.75rem);
+    font-weight: 500;
     color: var(--cloud);
-    line-height: 2;
+    line-height: 2.1;
     margin-bottom: 40px;
   }
 
   .climax-verse {
     font-family: 'Noto Serif KR', serif;
-    font-size: 0.88rem;
-    font-weight: 300;
+    font-size: 0.96rem;
+    font-weight: 400;
     color: var(--ash);
-    line-height: 2;
+    line-height: 2.1;
   }
 
   /* Altar section */
@@ -468,23 +470,23 @@
   .closing.visible { opacity: 1; transform: none; }
 
   .closing-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2rem, 5vw, 3.8rem);
-    font-weight: 300;
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.8rem, 5vw, 3.2rem);
+    font-weight: 700;
     color: var(--gold);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.02em;
     margin-bottom: 32px;
-    line-height: 1.3;
+    line-height: 1.4;
   }
 
   .closing-body {
     max-width: 580px;
     margin: 0 auto;
     font-family: 'Noto Serif KR', serif;
-    font-size: clamp(0.9rem, 2vw, 1.02rem);
-    font-weight: 300;
+    font-size: clamp(0.96rem, 2vw, 1.05rem);
+    font-weight: 400;
     color: var(--ash);
-    line-height: 2.1;
+    line-height: 2.2;
   }
 
   .closing-body p { margin-bottom: 1.4em; }
@@ -492,10 +494,10 @@
   .next-hint {
     display: inline-block;
     margin-top: 60px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.78rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
     color: var(--stone);
     border-bottom: 1px solid var(--stone);
     padding-bottom: 4px;
@@ -509,11 +511,12 @@
   }
 
   footer p {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.78rem;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 0.88rem;
+    font-weight: 400;
     color: var(--stone);
-    letter-spacing: 0.22em;
-    line-height: 1.9;
+    letter-spacing: 0.14em;
+    line-height: 2;
   }
 
   /* Animations */
@@ -627,11 +630,11 @@
     <div class="tension-pair">
       <div class="tension-cell left">
         <p class="tension-label">백성의 자리</p>
-        <p class="tension-text">떨며 멀리 서 있었다<br><br><span style="color:var(--stone);font-family:'Cormorant Garamond',serif;font-size:0.85rem;letter-spacing:0.12em;">출 20:18</span></p>
+        <p class="tension-text">떨며 멀리 서 있었다<br><br><span style="color:var(--stone);font-family:'Noto Serif KR',serif;font-size:0.88rem;font-weight:500;letter-spacing:0.08em;">출 20:18</span></p>
       </div>
       <div class="tension-cell right">
         <p class="tension-label">모세의 자리</p>
-        <p class="tension-text">짙은 어둠 속으로<br>가까이 갔다<br><span style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:0.85rem;letter-spacing:0.12em;">출 20:21</span></p>
+        <p class="tension-text">짙은 어둠 속으로<br>가까이 갔다<br><span style="color:var(--gold);font-family:'Noto Serif KR',serif;font-size:0.88rem;font-weight:500;letter-spacing:0.08em;">출 20:21</span></p>
       </div>
     </div>
     <div class="prose">
