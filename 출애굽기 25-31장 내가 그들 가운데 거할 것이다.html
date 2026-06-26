@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>출애굽기 25–31장 | 하나님의 영원한 경륜</title>
+<meta property="og:title" content="출애굽기 25–31장 — 내가 그들 가운데 거할 것이다">
+<meta property="og:description" content="성막에서 시작된 하나님과 사람의 재연합 — 부산교회 성경시리즈">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night:   #0A1520;
+    --deep:    #0D1B2A;
+    --veil:    #12243A;
+    --gold:    #C9A84C;
+    --gold-lt: #E8C878;
+    --crimson: #8B1A2F;
+    --crimson-lt: #B02040;
+    --blue:    #2A4A6B;
+    --blue-lt: #3A6090;
+    --amber:   #E8A838;
+    --linen:   #F0E8D0;
+    --linen-dk: #C8B890;
+    --mist:    rgba(201,168,76,0.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--night);
+    color: var(--linen);
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 300;
+    line-height: 1.9;
+    overflow-x: hidden;
+  }
+
+  /* ── Canvas ── */
+  #incense-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.35;
+  }
+
+  /* ── Progress bar ── */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--crimson), var(--gold), var(--amber));
+    z-index: 999;
+    transition: width 0.1s linear;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    background: linear-gradient(180deg, rgba(10,21,32,0.95) 0%, transparent 100%);
+  }
+  .nav-series {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+  .nav-ref {
+    font-size: 12px;
+    color: var(--linen-dk);
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+  }
+
+  /* ── Hero ── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    z-index: 1;
+  }
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s forwards;
+  }
+  .hero-title {
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--linen);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 1s 0.6s forwards;
+  }
+  .hero-title em {
+    font-style: normal;
+    color: var(--gold);
+  }
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 300;
+    color: var(--linen-dk);
+    max-width: 560px;
+    margin: 0 auto 40px;
+    opacity: 0;
+    animation: fadeUp 1s 0.9s forwards;
+  }
+  .hero-verse {
+    font-size: 14px;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    border-top: 1px solid rgba(201,168,76,0.3);
+    padding-top: 24px;
+    max-width: 460px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeUp 1s 1.2s forwards;
+  }
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 1s 1.8s forwards;
+  }
+  .scroll-hint span {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--linen-dk);
+    opacity: 0.5;
+  }
+  .scroll-arrow {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(180deg, var(--gold) 0%, transparent 100%);
+    animation: arrowPulse 2s infinite;
+  }
+
+  /* ── Curtain divider ── */
+  .curtain {
+    position: relative;
+    height: 80px;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .curtain::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 100%;
+    background: linear-gradient(180deg, var(--night) 0%, transparent 100%);
+  }
+  .curtain-line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 1px;
+  }
+  .curtain-line.gold  { background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .curtain-line.crim  { background: linear-gradient(90deg, transparent, var(--crimson), transparent); }
+  .curtain-line.blue  { background: linear-gradient(90deg, transparent, var(--blue-lt), transparent); }
+
+  /* ── Sections ── */
+  .section {
+    position: relative;
+    z-index: 1;
+    padding: 80px 24px;
+    max-width: 780px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* depth tiers */
+  .tier-outer  { background: transparent; }
+  .tier-holy   { background: rgba(42,74,107,0.06); border-radius: 2px; }
+  .tier-holiest{ background: rgba(139,26,47,0.06); border-radius: 2px; }
+
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    opacity: 0.6;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(201,168,76,0.3), transparent);
+  }
+
+  .section h2 {
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    font-weight: 700;
+    color: var(--linen);
+    line-height: 1.35;
+    margin-bottom: 32px;
+  }
+  .section h2 .accent { color: var(--gold); }
+  .section h2 .crim   { color: var(--crimson-lt); }
+
+  .prose {
+    font-size: clamp(1rem, 2vw, 1.1rem);
+    color: var(--linen-dk);
+    line-height: 2;
+    margin-bottom: 28px;
+  }
+  .prose strong {
+    color: var(--linen);
+    font-weight: 500;
+  }
+
+  /* ── Scripture block ── */
+  .scripture {
+    position: relative;
+    background: rgba(201,168,76,0.06);
+    border-left: 2px solid var(--gold);
+    padding: 24px 28px;
+    margin: 32px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .scripture.crim-verse {
+    background: rgba(139,26,47,0.08);
+    border-left-color: var(--crimson-lt);
+  }
+  .scripture.blue-verse {
+    background: rgba(42,74,107,0.1);
+    border-left-color: var(--blue-lt);
+  }
+  .scripture p {
+    font-size: 1.05rem;
+    color: var(--linen);
+    line-height: 1.85;
+    font-weight: 400;
+  }
+  .scripture .ref {
+    display: block;
+    margin-top: 12px;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+  .scripture.crim-verse .ref { color: var(--crimson-lt); }
+  .scripture.blue-verse .ref { color: var(--blue-lt); }
+
+  /* ── Icon Glyphs ── */
+  .glyph-row {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin: 40px 0;
+  }
+  .glyph-item {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+  }
+  .glyph-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 10px;
+    filter: sepia(1) saturate(1.5) hue-rotate(5deg);
+  }
+  .glyph-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .glyph-desc {
+    font-size: 0.85rem;
+    color: var(--linen-dk);
+    line-height: 1.7;
+  }
+
+  /* ── Flow path ── */
+  .flow-path {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 40px 0;
+  }
+  .flow-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 0;
+    border-left: 1px solid rgba(201,168,76,0.2);
+    padding-left: 28px;
+    position: relative;
+  }
+  .flow-item::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 24px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold);
+  }
+  .flow-item:last-child::before { background: var(--amber); box-shadow: 0 0 12px var(--amber); }
+  .flow-num {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    min-width: 36px;
+    padding-top: 3px;
+  }
+  .flow-text {
+    font-size: 1rem;
+    color: var(--linen-dk);
+    line-height: 1.8;
+  }
+  .flow-text strong { color: var(--linen); font-weight: 500; }
+
+  /* ── Final doxology ── */
+  #doxology {
+    position: relative;
+    z-index: 1;
+    padding: 100px 24px 80px;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  #doxology.visible { opacity: 1; transform: translateY(0); }
+
+  .dox-line {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 40px;
+    opacity: 0.5;
+  }
+  .dox-title {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    opacity: 0.6;
+    margin-bottom: 24px;
+  }
+  .dox-verse {
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    font-weight: 700;
+    color: var(--linen);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .dox-verse .gold { color: var(--gold); }
+  .dox-ref {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    opacity: 0.6;
+    margin-bottom: 60px;
+  }
+  .conclusion-prose {
+    font-size: 1rem;
+    color: var(--linen-dk);
+    line-height: 2;
+    text-align: left;
+    margin-bottom: 20px;
+  }
+
+  /* ── Footer ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 40px 24px 60px;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .footer-series {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    opacity: 0.5;
+    margin-bottom: 8px;
+  }
+  .footer-church {
+    font-size: 13px;
+    color: var(--linen-dk);
+    opacity: 0.4;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes arrowPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50%       { opacity: 0.8; transform: scaleY(1.1); }
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 600px) {
+    nav { padding: 16px 20px; }
+    .section { padding: 60px 20px; }
+    .glyph-row { flex-direction: column; gap: 20px; }
+    .glyph-item { min-width: unset; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .section, #doxology { transition: none; opacity: 1; transform: none; }
+    #incense-canvas { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<canvas id="incense-canvas"></canvas>
+
+<nav>
+  <span class="nav-series">EXODUS SERIES · 부산교회</span>
+  <span class="nav-ref">출애굽기 25–31장</span>
+</nav>
+
+<!-- ══════ HERO ══════ -->
+<section id="hero">
+  <p class="hero-eyebrow">EXODUS · 하나님의 영원한 경륜 시리즈</p>
+  <h1 class="hero-title">내가 그들 가운데<br><em>거할 것이다</em></h1>
+  <p class="hero-sub">성막은 건물이 아닙니다.<br>에덴에서 잃어버린 동행을 되찾으시려는<br>하나님의 움직임입니다.</p>
+  <div class="hero-verse">
+    "그들이 나를 위하여 성소를 만들게 하여<br>내가 그들 가운데 거할 수 있게 하여라."<br>
+    <strong>출애굽기 25:8</strong>
+  </div>
+  <div class="scroll-hint">
+    <span>SCROLL</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- curtain 1 -->
+<div class="curtain"><div class="curtain-line gold"></div></div>
+
+<!-- ══════ 01 · 자원하는 마음 ══════ -->
+<article class="section tier-outer" data-reveal>
+  <p class="section-label">01 · THE HEART</p>
+  <h2>하나님은 먼저<br><span class="accent">마음</span>을 찾으십니다</h2>
+
+  <p class="prose">창조 때처럼, 하나님은 억지로 관계를 맺지 않으십니다. 성막 건축의 첫 명령은 재료 목록이 아니라 <strong>'자원하는 마음'</strong>으로 시작됩니다. 금과 은과 청실과 홍실은 단지 외형일 뿐 — 실제로 하나님께 드려지는 것은 사람 자신입니다.</p>
+
+  <div class="scripture">
+    <p>"이스라엘 자손에게 말하여, 나에게 거제물을 가져오게 하여라… 자원하는 마음을 가진 모든 사람에게서…"</p>
+    <span class="ref">출애굽기 25:2</span>
+  </div>
+
+  <p class="prose">하나님과의 관계가 시작되는 자리는 율법의 강제가 아닙니다. <strong>자원함</strong> — 사람이 스스로 하나님을 향해 돌아서는 그 자리에서, 하나님은 거처를 세우십니다.</p>
+
+  <div class="glyph-row">
+    <div class="glyph-item">
+      <span class="glyph-icon">🪙</span>
+      <span class="glyph-label">GOLD · 금</span>
+      <p class="glyph-desc">신성함과 영광을 상징. 하나님의 본질적 속성</p>
+    </div>
+    <div class="glyph-item">
+      <span class="glyph-icon">🧵</span>
+      <span class="glyph-label">LINEN · 세마포</span>
+      <p class="glyph-desc">순결과 의를 상징. 하나님 앞에 서는 자격</p>
+    </div>
+    <div class="glyph-item">
+      <span class="glyph-icon">🌲</span>
+      <span class="glyph-label">SHITTIM · 조각목</span>
+      <p class="glyph-desc">부패하지 않는 나무. 영원을 향한 인간 본성</p>
+    </div>
+  </div>
+</article>
+
+<!-- curtain 2 -->
+<div class="curtain"><div class="curtain-line blue"></div></div>
+
+<!-- ══════ 02 · 증거궤 ══════ -->
+<article class="section tier-holy" data-reveal>
+  <p class="section-label">02 · THE ARK</p>
+  <h2>말씀 위에<br><span class="accent">은혜가 덮입니다</span></h2>
+
+  <p class="prose">성막의 가장 깊은 자리, 지성소에 증거궤가 놓입니다. 그 안에는 하나님의 말씀—증거판—이 있고, 그 위를 <strong>속죄 덮개(카포렛)</strong>가 덮습니다. 이 구조가 전부입니다.</p>
+
+  <div class="scripture crim-verse">
+    <p>"내가 너에게 줄 증거판을 그 궤 안에 넣어 두어야 한다."</p>
+    <span class="ref">출애굽기 25:16</span>
+  </div>
+
+  <div class="scripture">
+    <p>"내가 거기에서 너와 만나고…"</p>
+    <span class="ref">출애굽기 25:22</span>
+  </div>
+
+  <p class="prose">거룩한 요구 위에 은혜가 덮이는 구조 — 공의와 자비가 충돌하지 않고 <strong>만나는 자리</strong>가 바로 속죄소입니다. 하나님은 바로 이 자리에서 말씀하십니다. 율법이 죽이는 곳이 아니라, 속죄가 살리는 곳에서.</p>
+</article>
+
+<!-- curtain 3 -->
+<div class="curtain"><div class="curtain-line gold"></div></div>
+
+<!-- ══════ 03 · 상과 등잔대 ══════ -->
+<article class="section tier-holy" data-reveal>
+  <p class="section-label">03 · TABLE & LAMPSTAND</p>
+  <h2>하나님 앞에<br><span class="accent">살아 있다</span>는 것</h2>
+
+  <p class="prose">성소 안에는 두 가지가 항상 놓여 있어야 합니다. 상 위의 <strong>임재의 떡</strong>과, 어둠을 밝히는 <strong>등잔대의 빛</strong>. 둘 다 같은 것을 말합니다 — 하나님 앞에 생명이 있다는 것.</p>
+
+  <div class="scripture blue-verse">
+    <p>"그 상 위에 임재의 떡을 놓아두어 그것이 항상 내 앞에 있게 해야 한다."</p>
+    <span class="ref">출애굽기 25:30</span>
+  </div>
+
+  <div class="scripture">
+    <p>"등잔들을 올려놓아 등잔대 앞을 비추게 해야 한다."</p>
+    <span class="ref">출애굽기 25:37</span>
+  </div>
+
+  <p class="prose">성막 안에는 외부의 빛이 없습니다. 오직 하나님께서 공급하신 기름에 의해서만 빛이 납니다. 사람은 자신의 빛으로 사는 존재가 아니라, <strong>하나님으로부터 비춤을 받는 존재</strong>입니다.</p>
+</article>
+
+<!-- curtain 4 -->
+<div class="curtain"><div class="curtain-line crim"></div></div>
+
+<!-- ══════ 04 · 휘장과 제단 ══════ -->
+<article class="section tier-holiest" data-reveal>
+  <p class="section-label">04 · THE VEIL & ALTAR</p>
+  <h2><span class="crim">휘장</span>이 가르고<br>제단이 열어 줍니다</h2>
+
+  <p class="prose">성막은 점점 더 깊은 구조로 들어갑니다. 그리고 그 중심에 도달하기 직전, <strong>휘장</strong>이 성소와 지성소를 가릅니다. 하나님은 가까이 오시지만, 동시에 거룩함으로 인해 가려지십니다.</p>
+
+  <div class="scripture crim-verse">
+    <p>"그 휘장이 너희에게 성소와 지성소를 구분 지어 줄 것이다."</p>
+    <span class="ref">출애굽기 26:33</span>
+  </div>
+
+  <p class="prose">이것은 인간의 상태를 보여 줍니다 — 하나님을 향하지만, 스스로는 그분께 도달할 수 없는 존재. 그래서 제단이 앞에 놓입니다. 번제단은 형벌이 아닙니다. <strong>죽음을 통과하여 하나님께 나아가는 길의 시작</strong>입니다.</p>
+
+  <div class="scripture">
+    <p>"제단 위에서 태워라… 이것이 여호와에게 바치는 번제물이다."</p>
+    <span class="ref">출애굽기 29:18</span>
+  </div>
+</article>
+
+<!-- curtain 5 -->
+<div class="curtain"><div class="curtain-line gold"></div></div>
+
+<!-- ══════ 05 · 제사장 ══════ -->
+<article class="section tier-holy" data-reveal>
+  <p class="section-label">05 · THE PRIEST</p>
+  <h2>백성을 짊어지고<br><span class="accent">하나님 앞에</span> 서다</h2>
+
+  <p class="prose">성막이 완성되어도, 아무나 들어갈 수 없습니다. 하나님께 나아갈 <strong>사람이 필요합니다</strong>. 제사장은 단순한 직분이 아니라, 하나님과 사람 사이를 연결하는 존재입니다.</p>
+
+  <div class="scripture">
+    <p>"너의 형 아론과 그의 아들들을… 제사장으로서 나를 섬기게 하여라."</p>
+    <span class="ref">출애굽기 28:1</span>
+  </div>
+
+  <p class="prose">제사장의 의복은 단순한 옷이 아닙니다. 두 어깨 위에는 이스라엘 열두 지파의 이름이 새겨진 보석이 놓이고, 가슴에는 판결 가슴받이가 달립니다. 제사장은 <strong>민족 전체를 어깨에 지고, 가슴에 품고</strong> 하나님 앞에 섭니다.</p>
+
+  <div class="scripture blue-verse">
+    <p>"아론은 그들의 이름을 두 어깨 위에 두어서 여호와가 그들을 기억하게 해야 한다."</p>
+    <span class="ref">출애굽기 28:12</span>
+  </div>
+
+  <div class="scripture blue-verse">
+    <p>"아론은… 판결 가슴받이를 가슴에 달아… 늘 여호와 앞에서…"</p>
+    <span class="ref">출애굽기 28:29</span>
+  </div>
+
+  <p class="prose">하나님과 사람의 관계는 단절되지 않았습니다. 이스라엘은 <strong>여전히 기억되고 있습니다</strong>.</p>
+
+  <div class="glyph-row">
+    <div class="glyph-item">
+      <span class="glyph-icon">💧</span>
+      <span class="glyph-label">WASHING · 씻음</span>
+      <p class="glyph-desc">정결 — 하나님께 나아가는 준비</p>
+    </div>
+    <div class="glyph-item">
+      <span class="glyph-icon">🩸</span>
+      <span class="glyph-label">BLOOD · 피</span>
+      <p class="glyph-desc">속죄 — 타락한 상태의 처리</p>
+    </div>
+    <div class="glyph-item">
+      <span class="glyph-icon">🫙</span>
+      <span class="glyph-label">OIL · 기름</span>
+      <p class="glyph-desc">성별 — 하나님 생명의 부으심</p>
+    </div>
+  </div>
+</article>
+
+<!-- curtain 6 -->
+<div class="curtain"><div class="curtain-line blue"></div></div>
+
+<!-- ══════ 06 · 향과 물두멍 ══════ -->
+<article class="section tier-outer" data-reveal>
+  <p class="section-label">06 · INCENSE & LAVER</p>
+  <h2>보이지 않는<br><span class="accent">교통</span>이 올라갑니다</h2>
+
+  <p class="prose">향은 눈에 보이지 않습니다. 그러나 올라갑니다. 아론은 매일 아침 향단 위에 향을 피웁니다. 이것은 하나님께 향하는 보이지 않는 교통 — <strong>기도</strong>입니다.</p>
+
+  <div class="scripture">
+    <p>"아론은 분향단 위에 향기로운 향을 피워야 하며…"</p>
+    <span class="ref">출애굽기 30:7</span>
+  </div>
+
+  <div class="scripture crim-verse">
+    <p>"그들은… 손과 발을 씻어야 죽지 않을 것이다."</p>
+    <span class="ref">출애굽기 30:20</span>
+  </div>
+
+  <p class="prose">하나님과의 관계는 단 한 번의 사건이 아닙니다. <strong>지속적인 정결과 지속적인 교통</strong>이 요구됩니다. 물두멍 앞에서 매번 씻는 제사장처럼, 하나님 앞에 사는 삶은 날마다의 갱신입니다.</p>
+
+  <div class="scripture blue-verse">
+    <p>"이것은 나에게 너희 대대로 바르는 거룩한 기름이 될 것이다."</p>
+    <span class="ref">출애굽기 30:31</span>
+  </div>
+</article>
+
+<!-- curtain 7 -->
+<div class="curtain"><div class="curtain-line gold"></div></div>
+
+<!-- ══════ 07 · 브살렐 ══════ -->
+<article class="section tier-holy" data-reveal>
+  <p class="section-label">07 · BEZALEL</p>
+  <h2>성령이<br><span class="accent">사람 안에</span> 들어오십니다</h2>
+
+  <p class="prose">성막은 사람이 만들지만, 사람의 능력으로 만들어지지 않습니다. 하나님은 한 사람을 <strong>지명하여 부르시고</strong>, 그 안에 하나님의 영을 채우십니다.</p>
+
+  <div class="scripture">
+    <p>"내가… 브살렐을 지명하여 불렀다… 하나님의 영으로 충만하게 하였다."</p>
+    <span class="ref">출애굽기 31:2–3</span>
+  </div>
+
+  <p class="prose">이것은 놀라운 전환입니다. 하나님은 단지 거처를 요구하시는 분이 아닙니다. <strong>그 거처를 만들 능력까지 사람 안에 공급하시는 분</strong>입니다. 성령은 성막 완공 이후에 오시는 것이 아닙니다 — 성막을 만들기 위해 먼저 오십니다.</p>
+</article>
+
+<!-- curtain 8 -->
+<div class="curtain"><div class="curtain-line crim"></div></div>
+
+<!-- ══════ 08 · 안식일 ══════ -->
+<article class="section tier-holiest" data-reveal>
+  <p class="section-label">08 · SABBATH</p>
+  <h2>모든 것은<br><span class="accent">안식</span>으로 묶입니다</h2>
+
+  <p class="prose">성막 설계의 마지막, 하나님은 뜻밖의 말씀으로 모든 것을 감쌉니다. 건축도, 제사도, 제사장도 — 결국 <strong>안식</strong>을 위한 것이었습니다.</p>
+
+  <div class="scripture crim-verse">
+    <p>"너희는 반드시 나의 안식일을 지켜야 한다… 나와 너희 사이의 표시이다."</p>
+    <span class="ref">출애굽기 31:13</span>
+  </div>
+
+  <p class="prose">안식은 단순한 휴식이 아닙니다. 하나님과 사람이 하나 되어, 더 이상 분리되지 않는 상태입니다. 모든 수고의 끝에 이 자리가 있습니다 — <strong>하나님 안에서 쉬는 것</strong>.</p>
+
+  <p class="prose">성막의 모든 구조는 이 방향을 가리킵니다. 바깥뜰에서 시작하여, 성소를 지나, 지성소 안으로. 그 마지막 자리에서 하나님은 쉬십니다, 사람과 함께.</p>
+</article>
+
+<!-- curtain final -->
+<div class="curtain"><div class="curtain-line gold"></div></div>
+
+<!-- ══════ FLOW ══════ -->
+<article class="section" data-reveal>
+  <p class="section-label">전체 흐름 · THE FLOW</p>
+  <h2>창조에서 연합까지<br><span class="accent">하나의 방향</span></h2>
+
+  <div class="flow-path">
+    <div class="flow-item">
+      <span class="flow-num">I</span>
+      <p class="flow-text"><strong>창조</strong> — 사람 안에 생기를 불어넣으신 하나님</p>
+    </div>
+    <div class="flow-item">
+      <span class="flow-num">II</span>
+      <p class="flow-text"><strong>타락</strong> — 끊어진 관계, 에덴에서의 추방</p>
+    </div>
+    <div class="flow-item">
+      <span class="flow-num">III</span>
+      <p class="flow-text"><strong>성막</strong> — 다시 열리는 길, 자원하는 마음으로 시작</p>
+    </div>
+    <div class="flow-item">
+      <span class="flow-num">IV</span>
+      <p class="flow-text"><strong>제사</strong> — 죽음을 통과하여 회복되는 접근</p>
+    </div>
+    <div class="flow-item">
+      <span class="flow-num">V</span>
+      <p class="flow-text"><strong>제사장</strong> — 하나님과 사람을 이어 주는 중보</p>
+    </div>
+    <div class="flow-item">
+      <span class="flow-num">VI</span>
+      <p class="flow-text"><strong>성령</strong> — 브살렐 안에 임하신 하나님의 영</p>
+    </div>
+    <div class="flow-item">
+      <span class="flow-num">VII</span>
+      <p class="flow-text"><strong>안식</strong> — 하나님과 사람, 마침내 하나 되어 쉼</p>
+    </div>
+  </div>
+</article>
+
+<!-- ══════ DOXOLOGY ══════ -->
+<section id="doxology" data-reveal>
+  <div class="dox-line"></div>
+  <p class="dox-title">CLOSING DECLARATION · 경륜의 선언</p>
+  <p class="dox-verse">
+    "내가 이스라엘 자손 가운데에 거하며<br>
+    <span class="gold">그들의 하나님이 되겠다."</span>
+  </p>
+  <p class="dox-ref">출애굽기 29:45</p>
+
+  <p class="conclusion-prose">이 선언은 단순한 약속이 아닙니다. 하나님의 경륜 전체를 담고 있습니다.</p>
+  <p class="conclusion-prose">성막은 점이었습니다. 그러나 그 점은 선이 되고, 선은 이야기가 됩니다 — 예수 그리스도 안에서 휘장이 찢기고, 성령 안에서 사람 자신이 성전이 되며, 요한계시록의 새 예루살렘에서 하나님이 영원히 사람과 함께 거하시는 그 날까지.</p>
+  <p class="conclusion-prose">출애굽기 25장부터 31장까지 흐르는 이야기는 끝이 아닙니다. 이것은 <strong>영원한 경륜의 시작</strong>입니다.</p>
+</section>
+
+<footer>
+  <p class="footer-series">하나님의 영원한 경륜 시리즈 · EXODUS</p>
+  <p class="footer-church">부산교회 성경시리즈 · 출애굽기 25–31장</p>
+</footer>
+
+<script>
+/* ── Incense particle canvas ── */
+(function(){
+  const canvas = document.getElementById('incense-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  class Particle {
+    constructor(){
+      this.reset();
+    }
+    reset(){
+      this.x = Math.random() * W;
+      this.y = H + 20;
+      this.vy = -(0.3 + Math.random() * 0.5);
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.life = 0;
+      this.maxLife = 180 + Math.random() * 120;
+      this.size = 1.5 + Math.random() * 2.5;
+      this.hue = Math.random() < 0.5 ? 45 : 10; // gold or crimson
+    }
+    update(){
+      this.life++;
+      this.x += this.vx + Math.sin(this.life * 0.03) * 0.3;
+      this.y += this.vy;
+      this.vx *= 0.998;
+      if(this.life >= this.maxLife) this.reset();
+    }
+    draw(){
+      const alpha = Math.sin((this.life / this.maxLife) * Math.PI) * 0.6;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${this.hue}, 70%, 70%, ${alpha})`;
+      ctx.fill();
+    }
+  }
+
+  for(let i = 0; i < 60; i++){
+    const p = new Particle();
+    p.life = Math.random() * p.maxLife; // stagger
+    particles.push(p);
+  }
+
+  function loop(){
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ── Scroll reveal ── */
+(function(){
+  const els = document.querySelectorAll('[data-reveal]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(el => io.observe(el));
+})();
+
+/* ── Progress bar ── */
+(function(){
+  const bar = document.getElementById('progress-bar');
+  window.addEventListener('scroll', () => {
+    const max = document.body.scrollHeight - window.innerHeight;
+    bar.style.width = (window.scrollY / max * 100) + '%';
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
