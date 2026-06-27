@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>출애굽기 — 하나님의 영원한 경륜 시리즈</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand:    #F2EDE4;
+    --parchment: #E8DECE;
+    --ink:     #1C1611;
+    --ember:   #8B3A1E;
+    --gold:    #BF9A52;
+    --smoke:   #7A6F63;
+    --dawn:    #C8B49A;
+    --deep:    #2E2118;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--sand);
+    color: var(--ink);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── 배경 질감 레이어 ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 15% 20%, rgba(191,154,82,.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 85% 80%, rgba(139,58,30,.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    padding: 80px 24px 60px;
+    text-align: center;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .series-label {
+    display: inline-block;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: .22em;
+    color: var(--gold);
+    text-transform: uppercase;
+    border: 1px solid var(--gold);
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 32px;
+  }
+
+  .book-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(52px, 10vw, 96px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -.02em;
+    color: var(--deep);
+    position: relative;
+    display: inline-block;
+  }
+
+  /* 황금 밑줄 — 시그니처 */
+  .book-title::after {
+    content: '';
+    display: block;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin-top: 16px;
+    animation: lineExpand 1.2s cubic-bezier(.4,0,.2,1) forwards;
+    transform-origin: center;
+    transform: scaleX(0);
+  }
+  @keyframes lineExpand {
+    to { transform: scaleX(1); }
+  }
+
+  .hebrew-sub {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--smoke);
+    letter-spacing: .12em;
+    margin-top: 20px;
+    display: block;
+  }
+
+  .book-desc {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--smoke);
+    margin-top: 24px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ── 구분선 ── */
+  .divider {
+    position: relative;
+    z-index: 1;
+    max-width: 820px;
+    margin: 0 auto 48px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--dawn);
+    font-size: 11px;
+    letter-spacing: .18em;
+  }
+  .divider::before,
+  .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--parchment);
+  }
+
+  /* ── 목록 그리드 ── */
+  .list-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 820px;
+    margin: 0 auto 80px;
+    padding: 0 24px;
+  }
+
+  .episode-link {
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    align-items: center;
+    gap: 20px;
+    text-decoration: none;
+    padding: 22px 24px;
+    border-bottom: 1px solid var(--parchment);
+    transition: background .18s, border-color .18s;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* 호버 시 스윕 효과 */
+  .episode-link::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--ember);
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform .22s cubic-bezier(.4,0,.2,1);
+    border-radius: 2px;
+  }
+  .episode-link:hover {
+    background: var(--parchment);
+    border-color: transparent;
+  }
+  .episode-link:hover::before {
+    transform: scaleY(1);
+  }
+
+  .ep-num {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--gold);
+    letter-spacing: .1em;
+    text-align: right;
+    line-height: 1;
+    padding-top: 2px;
+    user-select: none;
+  }
+
+  .ep-body {
+    min-width: 0;
+  }
+
+  .ep-range {
+    display: block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    color: var(--smoke);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  .ep-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(15px, 2.5vw, 18px);
+    font-weight: 600;
+    color: var(--deep);
+    line-height: 1.35;
+    word-break: keep-all;
+    transition: color .18s;
+  }
+  .episode-link:hover .ep-title {
+    color: var(--ember);
+  }
+
+  .ep-arrow {
+    font-size: 16px;
+    color: var(--dawn);
+    transition: transform .22s, color .18s;
+    flex-shrink: 0;
+  }
+  .episode-link:hover .ep-arrow {
+    transform: translateX(4px);
+    color: var(--ember);
+  }
+
+  /* 스크롤 진입 애니메이션 */
+  .episode-link {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity .45s ease,
+      transform .45s ease,
+      background .18s,
+      border-color .18s;
+  }
+  .episode-link.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── 푸터 ── */
+  .footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 32px 24px 48px;
+    font-size: 12px;
+    color: var(--dawn);
+    letter-spacing: .08em;
+    border-top: 1px solid var(--parchment);
+    max-width: 820px;
+    margin: 0 auto;
+  }
+  .footer span { color: var(--gold); }
+
+  /* ── 모바일 ── */
+  @media (max-width: 560px) {
+    .hero { padding: 56px 20px 40px; }
+    .episode-link { grid-template-columns: 36px 1fr auto; gap: 12px; padding: 18px 16px; }
+    .ep-num { font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="series-label">하나님의 영원한 경륜 시리즈</div>
+  <h1 class="book-title">출애굽기</h1>
+  <span class="hebrew-sub">EXODUS · שְׁמוֹת</span>
+  <p class="book-desc">
+    속박에서 해방으로, 광야에서 성소로.<br>
+    하나님이 그분의 백성과 함께 거하시기 위한<br>구원과 언약의 여정.
+  </p>
+</header>
+
+<div class="divider">말씀 목록</div>
+
+<main class="list-wrap" id="list">
+
+  <a class="episode-link" href="https://kidori777.github.io/Exodus/출애굽기 1-2장 건져내심.html" target="_blank">
+    <span class="ep-num">01</span>
+    <div class="ep-body">
+      <span class="ep-range">1–2장</span>
+      <span class="ep-title">건져내심</span>
+    </div>
+    <span class="ep-arrow">→</span>
+  </a>
+
+  <a class="episode-link" href="https://kidori777.github.io/Exodus/출애굽기 3-4장 타오르는 불꽃.html" target="_blank">
+    <span class="ep-num">02</span>
+    <div class="ep-body">
+      <span class="ep-range">3–4장</span>
+      <span class="ep-title">타오르는 불꽃</span>
+    </div>
+    <span class="ep-arrow">→</span>
+  </a>
+
+  <a class="episode-link" href="https://kidori777.github.io/Exodus/출애굽기 5-10장 내 백성을 보내라.html" target="_blank">
+    <span class="ep-num">03</span>
+    <div class="ep-body">
+      <span class="ep-range">5–10장</span>
+      <span class="ep-title">내 백성을 보내라</span>
+    </div>
+    <span class="ep-arrow">→</span>
+  </a>
+
+  <a class="episode-link" href="https://kidori777.github.io/Exodus/출애굽기 11-12장 유월절.html" target="_blank">
+    <span class="ep-num">04</span>
+    <div class="ep-body">
+      <span class="ep-range">11–12장</span>
+      <span class="ep-title">유월절</span>
+    </div>
+    <span class="ep-arrow">→</span>
+  </a>
+
+  <a class="episode-link" href="https://kidori777.github.io/Exodus/출애굽기 13-15장 여호와께서 싸운신다.html" target="_blank">
+    <span class="ep-num">05</span>
+    <div class="ep-body">
+      <span class="ep-range">13–15장</span>
+      <span class="ep-title">여호와께서 싸우신다</span>
+    </div>
+    <span class="ep-arrow">→</span>
+  </a>
+
+  <a class="episode-link" href="https://kidori777.github.io/Exodus/출애굽기 16-18장 광야의 하나님.html" target="_blank">
+    <span class="ep-num">06</span>
+    <div class="ep-body">
+      <span class="ep-range">16–18장</span>
+      <span class="ep-title">광야의 하나님</span>
+    </div>
+    <span class="ep-arrow">→</span>
+  </a>
+
+  <a class="episode-link" href="https://kidori777.github.io/Exodus/출애굽기 19-20장 시내산에 내려오신 하나님.html" target="_blank">
+    <span class="ep-num">07</span>
+    <div class="ep-body">
+      <span class="ep-range">19–20장</span>
+      <span class="ep-title">시내산에 내려오신 하나님</span>
+    </div>
+    <span class="ep-arrow">→</span>
+  </a>
+
+  <a class="episode-link" href="https://kidori777.github.io/Exodus/출애굽기 21-22장 율법에서 드러난 하나님의 마음.html" target="_blank">
+    <span class="ep-num">08</span>
+    <div class="ep-body">
+      <span class="ep-range">21–22장</span>
+      <span class="ep-title">율법에서 드러난 하나님의 마음</span>
+    </div>
+    <span class="ep-arrow">→</span>
+  </a>
+
+  <a class="episode-link" href="https://kidori777.github.io/Exodus/출애굽기 23장 하나님과 함께 살아가는 사람.html" target="_blank">
+    <span class="ep-num">09</span>
+    <div class="ep-body">
+      <span class="ep-range">23장</span>
+      <span class="ep-title">하나님과 함께 살아가는 사람</span>
+    </div>
+    <span class="ep-arrow">→</span>
+  </a>
+
+  <a class="episode-link" href="https://kidori777.github.io/Exodus/출애굽기 24장 언약과 영광속으로.html" target="_blank">
+    <span class="ep-num">10</span>
+    <div class="ep-body">
+      <span class="ep-range">24장</span>
+      <span class="ep-title">언약과 영광속으로</span>
+    </div>
+    <span class="ep-arrow">→</span>
+  </a>
+
+  <a class="episode-link" href="https://kidori777.github.io/Exodus/출애굽기 25-31장 내가 그들 가운데 거할 것이다.html" target="_blank">
+    <span class="ep-num">11</span>
+    <div class="ep-body">
+      <span class="ep-range">25–31장</span>
+      <span class="ep-title">내가 그들 가운데 거할 것이다</span>
+    </div>
+    <span class="ep-arrow">→</span>
+  </a>
+
+  <a class="episode-link" href="https://kidori777.github.io/Exodus/출애굽기 32-34장 금송아지와 언약의 회복.html" target="_blank">
+    <span class="ep-num">12</span>
+    <div class="ep-body">
+      <span class="ep-range">32–34장</span>
+      <span class="ep-title">금송아지와 언약의 회복</span>
+    </div>
+    <span class="ep-arrow">→</span>
+  </a>
+
+  <a class="episode-link" href="https://kidori777.github.io/Exodus/출애굽기 35-40장 하늘이 땅에 내려오는 날.html" target="_blank">
+    <span class="ep-num">13</span>
+    <div class="ep-body">
+      <span class="ep-range">35–40장</span>
+      <span class="ep-title">하늘이 땅에 내려오는 날</span>
+    </div>
+    <span class="ep-arrow">→</span>
+  </a>
+
+</main>
+
+<footer class="footer">
+  <span>부산교회</span> · 하나님의 영원한 경륜 시리즈 · 출애굽기 전권
+</footer>
+
+<script>
+  const items = document.querySelectorAll('.episode-link');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        // 항목마다 살짝 지연
+        setTimeout(() => e.target.classList.add('visible'), i * 55);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  items.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
